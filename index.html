@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anuj Panthi - Portfolio</title>
-    <meta name="description" content="Portfolio of Anuj Panthi - Cyber Security Enthusiast and Computer Science Student">
+    <meta name="description" content="Portfolio of Anuj Panthi - Student Developer & Tech Enthusiast">
     <style>
-        /* Reset and base styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +13,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: #333;
         }
@@ -71,7 +70,7 @@
         .hero {
             padding: 8rem 1rem 4rem;
             background: linear-gradient(to right, #ffffff, #f3f4f6);
-            min-height: 100vh;
+            min-height: 80vh;
             display: flex;
             align-items: center;
         }
@@ -106,6 +105,10 @@
             padding: 5rem 1rem;
         }
 
+        section:nth-child(even) {
+            background: #f9fafb;
+        }
+
         .section-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -115,6 +118,33 @@
             font-size: 2.5rem;
             margin-bottom: 2rem;
             color: #1a1a1a;
+        }
+
+        /* Academic Section */
+        .academics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .academic-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .academic-card h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+
+        .gpa {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
         }
 
         /* Projects */
@@ -142,6 +172,18 @@
             margin-bottom: 1rem;
         }
 
+        .project-card a {
+            color: #2563eb;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .project-card a:hover {
+            text-decoration: underline;
+        }
+
         .tech-tags {
             display: flex;
             flex-wrap: wrap;
@@ -165,9 +207,10 @@
         }
 
         .skill-category {
-            background: #f9fafb;
+            background: white;
             padding: 1.5rem;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .skill-category h3 {
@@ -227,6 +270,7 @@
             padding: 2rem 1rem;
             text-align: center;
             color: #666;
+            border-top: 1px solid #eee;
         }
 
         /* Responsive Design */
@@ -268,6 +312,7 @@
             <button class="menu-btn">☰</button>
             <div class="nav-links">
                 <a href="#about">About</a>
+                <a href="#academics">Academics</a>
                 <a href="#projects">Projects</a>
                 <a href="#skills">Skills</a>
                 <a href="#contact">Contact</a>
@@ -279,9 +324,9 @@
         <div class="hero-content">
             <h1>
                 Hi, I'm Anuj Panthi
-                <span>Aspiring Cyber Security Expert</span>
+                <span>Student Developer & Tech Enthusiast</span>
             </h1>
-            <p>17-year-old Computer Science student passionate about cyber security, programming, and tech innovation.</p>
+            <p>17-year-old Computer Science student with a passion for programming, mathematics, and exploring the world of technology.</p>
             <a href="#contact" class="contact-btn email-btn">Get in touch</a>
         </div>
     </section>
@@ -289,8 +334,36 @@
     <section id="about">
         <div class="section-container">
             <h2>About Me</h2>
-            <p>As a 17-year-old computer science enthusiast, I'm deeply passionate about cyber security and technological innovation. My journey began with programming basics and quickly evolved into a fascination with securing digital systems and creating innovative solutions.</p>
-            <p>I've had the privilege of leading the robotics team at the Creative Fest, where I combined my technical skills with leadership abilities to guide our team to success. This experience has strengthened my belief in the power of collaborative innovation and the importance of staying ahead in the rapidly evolving tech landscape.</p>
+            <p>As a 17-year-old student, I'm deeply passionate about computer science and technology. My journey began with learning basic programming and has evolved into exploring various programming languages and technologies. I'm particularly interested in problem-solving through programming and mathematics.</p>
+            <p>I've had the opportunity to work on various projects, including leading the robotics team at the Creative Fest. This experience has helped me develop both technical and leadership skills while working collaboratively with others.</p>
+        </div>
+    </section>
+
+    <section id="academics">
+        <div class="section-container">
+            <h2>Academic Achievements</h2>
+            <div class="academics-grid">
+                <div class="academic-card">
+                    <h3>BLE (Basic Level Education)</h3>
+                    <div class="gpa">GPA: 4.00</div>
+                    <p>Achieved perfect GPA demonstrating exceptional academic performance</p>
+                </div>
+                <div class="academic-card">
+                    <h3>SEE (Secondary Education Examination)</h3>
+                    <div class="gpa">GPA: 3.75</div>
+                    <p>Strong academic performance across all subjects</p>
+                </div>
+                <div class="academic-card">
+                    <h3>Subject Expertise</h3>
+                    <ul class="skill-list">
+                        <li>Advanced Calculus</li>
+                        <li>Arithmetic & Coordinate Geometry</li>
+                        <li>Physics</li>
+                        <li>Computer Science</li>
+                        <li>Nepali Language</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -312,9 +385,9 @@
                     <h3>BGSR Creative Fest Website</h3>
                     <p>Official website for the Creative Fest 2081 event</p>
                     <div class="tech-tags">
-                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">HTML</span>
                         <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">CSS</span>
                     </div>
                     <a href="https://bgsrcreativefest2081.netlify.app" target="_blank">View Project →</a>
                 </div>
@@ -327,28 +400,30 @@
             <h2>Skills & Expertise</h2>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Programming</h3>
+                    <h3>Programming Languages</h3>
                     <ul class="skill-list">
                         <li>Python</li>
-                        <li>Java</li>
+                        <li>C Programming</li>
                         <li>JavaScript</li>
-                        <li>HTML/CSS</li>
+                        <li>HTML</li>
+                        <li>A little bit Java</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Cyber Security</h3>
+                    <h3>Database & Tools</h3>
                     <ul class="skill-list">
-                        <li>Network Security</li>
-                        <li>Penetration Testing</li>
-                        <li>Security Analysis</li>
+                        <li>MySQL</li>
+                        <li>Basic Cyber Security</li>
+                        <li>Version Control (Git)</li>
                     </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Other</h3>
+                    <h3>Academic Strengths</h3>
                     <ul class="skill-list">
-                        <li>Robotics</li>
-                        <li>Team Leadership</li>
-                        <li>Project Management</li>
+                        <li>Advanced Mathematics</li>
+                        <li>Problem Solving</li>
+                        <li>Physics</li>
+                        <li>Technical Writing</li>
                     </ul>
                 </div>
             </div>
