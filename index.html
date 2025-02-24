@@ -5,23 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anuj Panthi - Portfolio</title>
     <meta name="description" content="Portfolio of Anuj Panthi - Student Developer & Tech Enthusiast">
+    <!-- Favicon -->
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><circle fill='%232563eb' cx='18' cy='18' r='18'/><text x='18' y='22' font-size='12' fill='white' text-anchor='middle' font-family='Arial'>AP</text></svg>" type="image/svg+xml">
+
     <style>
+        :root {
+            --background: #ffffff;
+            --background-alt: #f9fafb;
+            --text: #333;
+            --text-alt: #666;
+            --heading: #1a1a1a;
+            --primary: #2563eb;
+            --primary-light: #e5edff;
+            --card-bg: white;
+            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --nav-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --border: #eee;
+        }
+
+        [data-theme="dark"] {
+            --background: #121212;
+            --background-alt: #1e1e1e;
+            --text: #e0e0e0;
+            --text-alt: #b0b0b0;
+            --heading: #ffffff;
+            --primary: #3b82f6;
+            --primary-light: #1e293b;
+            --card-bg: #252525;
+            --shadow: 0 2px 4px rgba(0,0,0,0.3);
+            --nav-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            --border: #333;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text);
+            background-color: var(--background);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: none;
+            outline: none;
+            font-size: 1.5rem;
+            transform-origin: center;
+            transition: transform 0.5s ease, background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.9);
         }
 
         /* Navigation */
         nav {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            box-shadow: var(--nav-shadow);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -39,8 +103,21 @@
         .nav-logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #1a1a1a;
+            color: var(--heading);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover .logo-icon {
+            transform: rotate(10deg);
         }
 
         .nav-links {
@@ -49,13 +126,13 @@
         }
 
         .nav-links a {
-            color: #666;
+            color: var(--text-alt);
             text-decoration: none;
             transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: #2563eb;
+            color: var(--primary);
         }
 
         .menu-btn {
@@ -64,12 +141,13 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--text);
         }
 
         /* Hero Section */
         .hero {
             padding: 8rem 1rem 4rem;
-            background: linear-gradient(to right, #ffffff, #f3f4f6);
+            background: linear-gradient(to right, var(--background), var(--background-alt));
             min-height: 80vh;
             display: flex;
             align-items: center;
@@ -84,18 +162,18 @@
             font-size: 3.5rem;
             line-height: 1.2;
             margin-bottom: 1rem;
-            color: #1a1a1a;
+            color: var(--heading);
         }
 
         .hero h1 span {
-            color: #2563eb;
+            color: var(--primary);
             display: block;
             margin-top: 0.5rem;
         }
 
         .hero p {
             font-size: 1.25rem;
-            color: #666;
+            color: var(--text-alt);
             margin-bottom: 2rem;
             max-width: 600px;
         }
@@ -106,7 +184,7 @@
         }
 
         section:nth-child(even) {
-            background: #f9fafb;
+            background: var(--background-alt);
         }
 
         .section-container {
@@ -117,7 +195,7 @@
         h2 {
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            color: #1a1a1a;
+            color: var(--heading);
         }
 
         /* Academic Section */
@@ -129,21 +207,21 @@
         }
 
         .academic-card {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
 
         .academic-card h3 {
-            color: #2563eb;
+            color: var(--primary);
             margin-bottom: 1rem;
         }
 
         .gpa {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #1a1a1a;
+            color: var(--heading);
             margin-bottom: 0.5rem;
         }
 
@@ -156,24 +234,26 @@
         }
 
         .project-card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             padding: 1.5rem;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .project-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
         }
 
         .project-card h3 {
             font-size: 1.25rem;
             margin-bottom: 1rem;
+            color: var(--heading);
         }
 
         .project-card a {
-            color: #2563eb;
+            color: var(--primary);
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -192,8 +272,8 @@
         }
 
         .tech-tag {
-            background: #e5edff;
-            color: #2563eb;
+            background: var(--primary-light);
+            color: var(--primary);
             padding: 0.25rem 0.75rem;
             border-radius: 999px;
             font-size: 0.875rem;
@@ -207,15 +287,15 @@
         }
 
         .skill-category {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
 
         .skill-category h3 {
             margin-bottom: 1rem;
-            color: #1a1a1a;
+            color: var(--heading);
         }
 
         .skill-list {
@@ -231,7 +311,7 @@
         .skill-list li::before {
             content: "→";
             margin-right: 0.5rem;
-            color: #2563eb;
+            color: var(--primary);
         }
 
         /* Contact */
@@ -249,28 +329,88 @@
             text-decoration: none;
             color: white;
             font-weight: 500;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s, transform 0.3s;
+            gap: 0.75rem;
         }
 
         .contact-btn:hover {
             opacity: 0.9;
+            transform: translateY(-3px);
+        }
+
+        .contact-btn:active {
+            transform: translateY(0);
         }
 
         .instagram-btn {
-            background: #E1306C;
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
         }
 
         .email-btn {
             background: #ea4335;
         }
 
+        .btn-icon {
+            display: inline-block;
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .instagram-icon {
+            animation: pulse 2s infinite;
+        }
+
+        .email-icon {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
         /* Footer */
         footer {
-            background: white;
+            background: var(--card-bg);
             padding: 2rem 1rem;
             text-align: center;
-            color: #666;
-            border-top: 1px solid #eee;
+            color: var(--text-alt);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Theme transition animation */
+        .theme-transition {
+            animation: themeTransition 0.5s ease;
+        }
+
+        @keyframes themeTransition {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         /* Responsive Design */
@@ -290,9 +430,9 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: white;
+                background: var(--card-bg);
                 padding: 1rem;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                box-shadow: var(--shadow);
             }
 
             .hero h1 {
@@ -308,8 +448,16 @@
 <body>
     <nav>
         <div class="nav-container">
-            <a href="#" class="nav-logo">Anuj Panthi</a>
-            <button class="menu-btn">☰</button>
+            <a href="#" class="nav-logo">
+    <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36">
+        <circle fill="var(--primary)" cx="18" cy="18" r="18"/>
+        <text x="18" y="22" font-size="12" fill="white" text-anchor="middle" font-family="Arial">AP</text>
+        
+    </svg>
+    Anuj Panthi
+</a>
+
+            <button class="menu-btn" aria-label="Toggle navigation menu">☰</button>
             <div class="nav-links">
                 <a href="#about">About</a>
                 <a href="#academics">Academics</a>
@@ -319,6 +467,10 @@
             </div>
         </div>
     </nav>
+
+    <button class="theme-toggle" aria-label="Toggle dark/light theme">
+        <span class="toggle-icon">🌙</span>
+    </button>
 
     <section class="hero">
         <div class="hero-content">
@@ -435,8 +587,21 @@
             <h2>Get in Touch</h2>
             <p>Feel free to reach out for collaborations or just a friendly chat about technology!</p>
             <div class="contact-links">
-                <a href="https://www.instagram.com/anuz.912/" target="_blank" class="contact-btn instagram-btn">Instagram</a>
-                <a href="mailto:anujpanthi2065@gmail.com" class="contact-btn email-btn">Email</a>
+                <a href="https://www.instagram.com/anuz.912/" target="_blank" class="contact-btn instagram-btn">
+                    <svg class="btn-icon instagram-icon" viewBox="0 0 24 24">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    Instagram
+                </a>
+                <a href="mailto:anujpanthi2065@gmail.com" class="contact-btn email-btn">
+                    <svg class="btn-icon email-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    Email Me
+                </a>
             </div>
         </div>
     </section>
@@ -446,6 +611,62 @@
     </footer>
 
     <script>
+        // Theme handling
+        const themeToggleBtn = document.querySelector('.theme-toggle');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        
+        // Check for saved theme preference or use system preference
+        const getCurrentTheme = () => {
+            // Check if user has previously selected a theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Otherwise, use system preference
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+        
+        // Apply the theme
+        const setTheme = (theme) => {
+            document.body.classList.add('theme-transition');
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            
+            // Update toggle button icon
+            toggleIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            
+            // Remove transition class after animation completes
+            setTimeout(() => {
+                document.body.classList.remove('theme-transition');
+            }, 500);
+        };
+        
+        // Initialize theme
+        setTheme(getCurrentTheme());
+        
+        // Toggle theme when button is clicked
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            // Apply rotation animation
+            themeToggleBtn.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                themeToggleBtn.style.transform = '';
+            }, 500);
+            
+            setTheme(newTheme);
+        });
+        
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            if (!localStorage.getItem('theme')) {
+                // Only auto-switch if user hasn't manually set a preference
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+        
         // Mobile menu toggle
         const menuBtn = document.querySelector('.menu-btn');
         const navLinks = document.querySelector('.nav-links');
@@ -461,6 +682,11 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
             });
         });
     </script>
