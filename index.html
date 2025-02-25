@@ -14,7 +14,8 @@
   "name": "Anuj Panthi",
   "url": "https://anujpanthi.com.np",
   "sameAs": [
-    "https://www.instagram.com/anuz.912/"
+    "https://www.instagram.com/anuz.912/",
+    "https://www.facebook.com/anujpanthi108"
   ],
   "jobTitle": "Cyber Security Student",
   "description": "Anuj Panthi's personal portfolio website showcasing projects and blogs on Cyber Security and Web Development."
@@ -359,6 +360,10 @@
             background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
         }
 
+        .facebook-btn {
+            background: #1877f2;
+        }
+
         .email-btn {
             background: #ea4335;
         }
@@ -376,6 +381,10 @@
 
         .instagram-icon {
             animation: pulse 2s infinite;
+        }
+
+        .facebook-icon {
+            animation: spin 3s infinite;
         }
 
         .email-icon {
@@ -400,6 +409,21 @@
             }
             50% {
                 transform: translateY(-5px);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(10deg);
+            }
+            75% {
+                transform: rotate(-10deg);
+            }
+            100% {
+                transform: rotate(0deg);
             }
         }
 
@@ -607,6 +631,12 @@
                         <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
                     Instagram
+                </a>
+                <a href="https://www.facebook.com/anujpanthi108" target="_blank" class="contact-btn facebook-btn">
+                    <svg class="btn-icon facebook-icon" viewBox="0 0 24 24">
+                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                    </svg>
+                    Facebook
                 </a>
                 <a href="mailto:anujpanthi2065@gmail.com" class="contact-btn email-btn">
                     <svg class="btn-icon email-icon" viewBox="0 0 24 24">
