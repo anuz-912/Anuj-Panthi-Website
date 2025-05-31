@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flappy Plane</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #87CEEB;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        
+        .game-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            height: 100vh;
+            padding: 10px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 5px;
+            z-index: 10;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+            letter-spacing: -0.02em;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+        }
+        
+        .score-container {
+            background: rgba(248, 250, 252, 0.9);
+            border: 1px solid #e2e8f0;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4f46e5;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            min-width: 120px;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        
+        .game-container {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2e8f0;
+            background: white;
+            flex: 1;
+            width: 95%;
+            max-width: 95vw;
+            max-height: calc(100vh - 180px);
+        }
+        
+        canvas {
+            display: block;
+            background: #87CEEB;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .instructions {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            font-weight: 500;
+            background: rgba(248, 250, 252, 0.9);
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            max-width: 400px;
+            z-index: 10;
+            position: relative;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+        }
+        
+        .instructions strong {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        
+        .credits {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+        
+        .credits:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .credits-title {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        
+        .credits-link {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        
+        .credits-link:hover {
+            color: #3730a3;
+        }
+        
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #4f46e5;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .home-btn:hover {
+            background: #3730a3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.3);
+        }
+        
+        /* Game over and start screen styling */
+        .game-overlay {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+        
+        .game-text-primary {
+            color: #1a1a1a;
+        }
+        
+        .game-text-secondary {
+            color: #6b7280;
+        }
+        
+        .game-text-accent {
+            color: #4f46e5;
+        }
+        
+        .game-text-success {
+            color: #059669;
+        }
+        
+        .game-text-error {
+            color: #dc2626;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 0.85rem;
+            }
+            
+            .score-container {
+                padding: 6px 16px;
+                font-size: 1rem;
+            }
+            
+            .credits {
+                bottom: 10px;
+                right: 10px;
+                left: auto;
+                font-size: 0.75rem;
+                padding: 10px 12px;
+            }
+            
+            .home-btn {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .game-wrapper {
+                padding: 8px;
+                gap: 6px;
+            }
+            
+            .game-container {
+                width: 98%;
+                max-height: calc(100vh - 150px);
+            }
+            
+            .instructions {
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .header {
+                margin-bottom: 2px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+                margin-bottom: 2px;
+            }
+            
+            .subtitle {
+                font-size: 0.75rem;
+                margin-bottom: 5px;
+            }
+            
+            .score-container {
+                padding: 4px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .instructions {
+                font-size: 0.75rem;
+                padding: 4px 8px;
+            }
+            
+            .game-container {
+                max-height: calc(100vh - 120px);
+            }
+        }
+        
+        /* Score pulse animation */
+        .score-pulse {
+            animation: scorePulse 0.3s ease;
+        }
+        
+        @keyframes scorePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://anujpanthi.com.np" class="home-btn">
+        ← Home
+    </a>
+    
+    <div class="game-wrapper">
+        <div class="header">
+            <h1>Flappy Plane</h1>
+            <p class="subtitle">Navigate through the city skyline</p>
+        </div>
+        
+        <div class="score-container" id="score">Score: 0</div>
+        
+        <div class="game-container">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+        
+        <div class="instructions">
+            Press <strong>SPACE</strong> or <strong>TAP</strong> to make the plane fly ✈️
+        </div>
+    </div>
+    
+    <div class="credits">
+        <div class="credits-title">Developed by</div>
+        <a href="https://instagram.com/anuz.912" target="_blank" class="credits-link">@anuz.912</a>
+    </div>
+
+    <!-- Audio element for collision sound -->
+    <audio id="crashSound" src="audio.wav" preload="auto"></audio>
+
+    <script>
+        let score = 0;
+        let lastScore = 0;
+        let gameOver = false;
+        let hasPlayedCrashSound = false;
+        let started = false;
+        
+        const plane = {
+            x: 0,
+            y: 0,
+            width: 50,
+            height: 40,
+            velocity: 0,
+            gravity: 0.25,
+            flapStrength: -5
+        };
+        
+        // Game variables
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        const crashSound = document.getElementById('crashSound');
+        
+        // Set canvas size to fill container
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            
+            if (!started) {
+                plane.x = canvas.width * 0.25;
+                plane.y = canvas.height / 2;
+            }
+        }
+        
+        // Initial canvas setup
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Game images
+        const planeImg = new Image();
+        planeImg.src = 'plane.png';
+        
+        // Two building images in WebP format
+        const buildingImgs = [
+            new Image(),
+            new Image()
+        ];
+        buildingImgs[0].src = 'building01.webp';
+        buildingImgs[1].src = 'building02.webp';
+        
+        let currentBuildingImgIndex = 0;
+
+        // Buildings (obstacles)
+        let buildings = [];
+        const buildingWidth = 80;
+        const gapHeight = 150;
+        let lastBuildingTime = 0;
+        const buildingInterval = 2000; // ms
+
+        // Game loop
+        function gameLoop(timestamp) {
+            if (gameOver) {
+                drawGameOver();
+                return;
+            }
+
+            // Clear canvas and draw sky background
+            drawSkyBackground();
+
+            // Update and draw plane
+            updatePlane();
+            drawPlane();
+
+            // Handle buildings
+            if (started) {
+                if (timestamp - lastBuildingTime > buildingInterval) {
+                    addBuilding();
+                    lastBuildingTime = timestamp;
+                    currentBuildingImgIndex = (currentBuildingImgIndex + 1) % 2;
+                }
+                updateBuildings();
+                drawBuildings();
+                checkCollisions();
+            } else {
+                drawStartScreen();
+            }
+
+            // Update score
+            const currentScore = Math.floor(score/2);
+            if (currentScore !== lastScore) {
+                scoreElement.classList.add('score-pulse');
+                setTimeout(() => scoreElement.classList.remove('score-pulse'), 300);
+                lastScore = currentScore;
+            }
+            scoreElement.textContent = `Score: ${currentScore}`;
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        function drawSkyBackground() {
+            // Simple sky blue gradient background
+            const skyGradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            skyGradient.addColorStop(0, '#87CEEB');
+            skyGradient.addColorStop(0.7, '#B0E0E6');
+            skyGradient.addColorStop(1, '#E0F6FF');
+            ctx.fillStyle = skyGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function updatePlane() {
+            if (!started) return;
+            
+            plane.velocity += plane.gravity;
+            plane.y += plane.velocity;
+
+            if (plane.y < 0) {
+                plane.y = 0;
+                plane.velocity = 0;
+            }
+
+            if (plane.y + plane.height > canvas.height) {
+                gameOver = true;
+                playCrashSound();
+            }
+        }
+
+        function playCrashSound() {
+            if (!hasPlayedCrashSound) {
+                crashSound.currentTime = 0;
+                crashSound.play().catch(e => console.log("Audio play failed:", e));
+                hasPlayedCrashSound = true;
+            }
+        }
+
+        function drawPlane() {
+            if (planeImg.complete) {
+                ctx.save();
+                ctx.translate(plane.x + plane.width / 2, plane.y + plane.height / 2);
+                ctx.scale(-1, 1);
+                const rotation = Math.min(Math.max(plane.velocity * 3, -30), 30);
+                ctx.rotate(rotation * Math.PI / 180);
+                const drawWidth = plane.width * 1.5;
+                const drawHeight = plane.height * 1.5;
+                ctx.drawImage(planeImg, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
+                ctx.restore();
+            } else {
+                // Clean fallback design
+                ctx.fillStyle = '#4f46e5';
+                ctx.fillRect(plane.x, plane.y, plane.width, plane.height);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(plane.x + 5, plane.y + 5, plane.width - 10, plane.height - 10);
+            }
+        }
+
+        function addBuilding() {
+            const buildingHeight = Math.random() * (canvas.height - gapHeight - 100) + 50;
+            
+            buildings.push({
+                x: canvas.width,
+                y: 0,
+                width: buildingWidth,
+                height: buildingHeight,
+                passed: false,
+                imgIndex: currentBuildingImgIndex
+            });
+
+            buildings.push({
+                x: canvas.width,
+                y: buildingHeight + gapHeight,
+                width: buildingWidth,
+                height: canvas.height - buildingHeight - gapHeight,
+                passed: false,
+                imgIndex: currentBuildingImgIndex
+            });
+        }
+
+        function updateBuildings() {
+            for (let i = 0; i < buildings.length; i++) {
+                buildings[i].x -= 2;
+
+                if (!buildings[i].passed && buildings[i].x + buildings[i].width < plane.x) {
+                    buildings[i].passed = true;
+                    score++;
+                }
+            }
+
+            if (buildings.length > 0 && buildings[0].x + buildings[0].width < 0) {
+                buildings.shift();
+                buildings.shift();
+            }
+        }
+
+        function drawBuildings() {
+            for (let i = 0; i < buildings.length; i++) {
+                const b = buildings[i];
+                const img = buildingImgs[b.imgIndex];
+                
+                if (img.complete) {
+                    ctx.save();
+                    if (b.y === 0) {
+                        ctx.translate(b.x, b.y);
+                        ctx.scale(1, -1);
+                        ctx.drawImage(img, 0, -b.height, b.width, b.height);
+                    } else {
+                        ctx.drawImage(img, b.x, b.y, b.width, b.height);
+                    }
+                    ctx.restore();
+                } else {
+                    // Clean fallback with professional colors
+                    ctx.fillStyle = b.imgIndex === 0 ? '#64748b' : '#475569';
+                    ctx.fillRect(b.x, b.y, b.width, b.height);
+                }
+            }
+        }
+
+        function checkCollisions() {
+            for (let i = 0; i < buildings.length; i++) {
+                const b = buildings[i];
+                if (
+                    plane.x + plane.width > b.x &&
+                    plane.x < b.x + b.width &&
+                    plane.y + plane.height > b.y &&
+                    plane.y < b.y + b.height
+                ) {
+                    if (!gameOver) {
+                        playCrashSound();
+                    }
+                    gameOver = true;
+                }
+            }
+        }
+
+        function drawStartScreen() {
+            // Clean start screen
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Title
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = `bold ${Math.min(canvas.width/12, 32)}px Inter`;
+            ctx.textAlign = 'center';
+            ctx.fillText('FLAPPY PLANE', canvas.width/2, canvas.height/2 - canvas.height*0.08);
+            
+            // Subtitle
+            ctx.fillStyle = '#6b7280';
+            ctx.font = `${Math.min(canvas.width/25, 16)}px Inter`;
+            ctx.fillText('Navigate through the city skyline', canvas.width/2, canvas.height/2 - canvas.height*0.02);
+            
+            // Instructions
+            ctx.fillStyle = '#4f46e5';
+            ctx.font = `600 ${Math.min(canvas.width/22, 18)}px Inter`;
+            ctx.fillText('Press SPACE or tap to start', canvas.width/2, canvas.height/2 + canvas.height*0.06);
+        }
+
+        function drawGameOver() {
+            // Clean game over screen
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Game Over text
+            ctx.fillStyle = '#dc2626';
+            ctx.font = `bold ${Math.min(canvas.width/12, 32)}px Inter`;
+            ctx.textAlign = 'center';
+            ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2 - canvas.height*0.15);
+            
+            // Score
+            ctx.fillStyle = '#1a1a1a';
+            ctx.font = `600 ${Math.min(canvas.width/16, 24)}px Inter`;
+            ctx.fillText(`Final Score: ${Math.floor(score/2)}`, canvas.width/2, canvas.height/2 - canvas.height*0.08);
+            
+            // Pilot rating
+            ctx.fillStyle = '#059669';
+            ctx.font = `600 ${Math.min(canvas.width/22, 18)}px Inter`;
+            ctx.fillText('You are a great pilot! ✈️🫡', canvas.width/2, canvas.height/2);
+            ctx.fillText('We rate you 9/11 😉', canvas.width/2, canvas.height/2 + canvas.height*0.05);
+            ctx.fillText('KD: 1487+ 💀', canvas.width/2, canvas.height/2 + canvas.height*0.1);
+            
+            // Restart instruction
+            ctx.fillStyle = '#4f46e5';
+            ctx.font = `500 ${Math.min(canvas.width/25, 16)}px Inter`;
+            ctx.fillText('Tap to play again', canvas.width/2, canvas.height/2 + canvas.height*0.18);
+        }
+
+        function flap() {
+            if (!started) {
+                started = true;
+                if (gameOver) {
+                    resetGame();
+                }
+            }
+            plane.velocity = plane.flapStrength;
+        }
+
+        function resetGame() {
+            plane.x = canvas.width * 0.25;
+            plane.y = canvas.height / 2;
+            plane.velocity = 0;
+            buildings = [];
+            score = 0;
+            lastScore = 0;
+            gameOver = false;
+            hasPlayedCrashSound = false;
+            lastBuildingTime = 0;
+            currentBuildingImgIndex = 0;
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flap();
+            }
+        });
+
+        canvas.addEventListener('click', () => {
+            flap();
+            if (gameOver) {
+                resetGame();
+                requestAnimationFrame(gameLoop);
+            }
+        });
+
+        // Touch support for mobile
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            flap();
+            if (gameOver) {
+                resetGame();
+                requestAnimationFrame(gameLoop);
+            }
+        });
+
+        // Start the game
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
