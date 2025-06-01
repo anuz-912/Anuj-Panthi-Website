@@ -517,8 +517,8 @@
                 ctx.scale(-1, 1);
                 const rotation = Math.min(Math.max(plane.velocity * 3, -30), 30);
                 ctx.rotate(rotation * Math.PI / 180);
-                const drawWidth = plane.width * 1.5;
-                const drawHeight = plane.height * 1.5;
+                const drawWidth = plane.width * 2.25;
+                const drawHeight = plane.height * 2.25;
                 ctx.drawImage(planeImg, -drawWidth / 2, -drawHeight / 2, drawWidth, drawHeight);
                 ctx.restore();
             } else {
