@@ -1,15 +1,12 @@
-// Theme handling
 const themeToggleBtn = document.querySelector('.theme-toggle');
 const toggleIcon = document.querySelector('.toggle-icon');
 
-// Check for saved theme preference or use system preference
 const getCurrentTheme = () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) return savedTheme;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
-// Apply the theme
 const setTheme = (theme) => {
     document.body.classList.add('theme-transition');
     document.documentElement.setAttribute('data-theme', theme);
@@ -18,10 +15,8 @@ const setTheme = (theme) => {
     setTimeout(() => document.body.classList.remove('theme-transition'), 500);
 };
 
-// Initialize theme
 setTheme(getCurrentTheme());
 
-// Toggle theme on button click
 themeToggleBtn.addEventListener('click', () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
@@ -177,14 +172,15 @@ document.querySelectorAll('.floating-element').forEach((element, index) => {
     element.style.animationDelay = `${index * 3}s`;
 });
 
-// ✅ Typing animation for hero text
 const heroMain = document.querySelector('.hero-main');
 const heroSub = document.querySelector('.hero-sub');
+const vibeCoderTag = document.querySelector('.vibe-coder-tag');
 
-if (heroMain && heroSub) {
+if (heroMain && heroSub && vibeCoderTag) {
     const mainText = heroMain.textContent.trim();
     heroMain.textContent = ''; // clear for typing
     heroSub.style.opacity = '0'; // hide subtitle
+    vibeCoderTag.style.opacity = '0'; // hide vibe coder tag
 
     let i = 0;
     const typeMain = () => {
@@ -197,6 +193,20 @@ if (heroMain && heroSub) {
             setTimeout(() => {
                 heroSub.style.opacity = '1';
                 heroSub.style.transition = 'opacity 1s ease';
+                
+                // Fade in vibe coder tag after subtitle
+                setTimeout(() => {
+                    vibeCoderTag.style.opacity = '1';
+                    vibeCoderTag.style.transition = 'opacity 1s ease';
+                    
+                    // Add music note animation
+                    const musicNotes = ['🎵', '🎶', '🎧', '🎹', '🎼'];
+                    let noteIndex = 0;
+                    setInterval(() => {
+                        vibeCoderTag.textContent = `Vibe Coder ${musicNotes[noteIndex]}✨`;
+                        noteIndex = (noteIndex + 1) % musicNotes.length;
+                    }, 2000);
+                }, 500);
             }, 500);
         }
     };
@@ -231,6 +241,7 @@ window.addEventListener('error', (e) => {
     }
 });
 
+
 // Fade-in animation on load
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Portfolio website loaded successfully!');
@@ -238,5 +249,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.transition = 'opacity 0.5s ease';
     setTimeout(() => {
         document.body.style.opacity = '1';
+        
+        // Add keyboard shortcut for Featured page
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'f') {
+                e.preventDefault();
+                window.location.href = 'featured.html';
+            }
+        });
     }, 100);
+});
+
+// Featured page link handling
+document.querySelectorAll('a[href="featured.html"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'featured.html';
+    });
 });
