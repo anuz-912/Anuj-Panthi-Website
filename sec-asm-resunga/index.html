@@ -1,1 +1,570 @@
-Much to come just wait
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resunga Multiple Campus Security Audit | Anuj Panthi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #2d3748;
+            --secondary: #4a5568;
+            --accent: #3182ce;
+            --light: #f7fafc;
+            --border: #e2e8f0;
+            --success: #38a169;
+        }
+
+        body {
+            background: var(--light);
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Project Overview */
+        .overview {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .overview-item {
+            text-align: center;
+            padding: 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .overview-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .overview-item i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .overview-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .overview-item p {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Documents Section */
+        .documents {
+            margin-bottom: 4rem;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .doc-card:hover {
+            transform: translateX(5px);
+        }
+
+        .doc-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .doc-card p {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .doc-link {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .doc-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Scope Section */
+        .scope-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .scope-box {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .scope-box h3 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scope-box ul {
+            list-style: none;
+        }
+
+        .scope-box li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .scope-box li:before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .scope-box.out-scope li:before {
+            content: '✗';
+            color: #e53e3e;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e0;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5568;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Client Website Link */
+        .client-link {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .client-link h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .client-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--accent);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .client-link a:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                margin: 0 1rem;
+            }
+            
+            .overview, .scope-box {
+                padding: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Security<span>Audit</span></a>
+                <div class="nav-links">
+                    <a href="#overview">Overview</a>
+                    <a href="#documents">Documents</a>
+                    <a href="#scope">Scope</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Resunga Multiple Campus Security Audit</h1>
+            <p>A 30-day independent external security assessment conducted as part of cybersecurity research and skill-building initiative.</p>
+            <div class="badge">
+                <i class="fas fa-shield-alt"></i> Authorized • Non-Intrusive • Ethical
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Overview -->
+    <section id="overview" class="container">
+        <div class="overview">
+            <h2 class="section-title">Project Overview</h2>
+            <p>This independent security audit was conducted for <strong>Resunga Multiple Campus</strong> (Tribhuvan University) with explicit authorization. The project focused on identifying vulnerabilities in publicly accessible systems while adhering to strict ethical guidelines and non-intrusive testing methodologies.</p>
+            
+            <div class="overview-grid">
+                <a href="https://resungacampus.edu.np" target="_blank" class="overview-item">
+                    <i class="fas fa-university"></i>
+                    <h3>Client</h3>
+                    <p>Resunga Multiple Campus</p>
+                </a>
+                <a href="https://anujpanthi.com.np" target="_blank" class="overview-item">
+                    <i class="fas fa-user-secret"></i>
+                    <h3>Auditor</h3>
+                    <p>Anuj Panthi</p>
+                </a>
+                <div class="overview-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Duration</h3>
+                    <p>30 Days</p>
+                </div>
+                <div class="overview-item">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Type</h3>
+                    <p>External Security Assessment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents -->
+    <section id="documents" class="container documents">
+        <h2 class="section-title">Project Documents</h2>
+        <p>All documentation related to this security audit:</p>
+        
+        <div class="doc-grid">
+            <div class="doc-card">
+                <h4>About The Auditor</h4>
+                <p>Profile, qualifications, and focus areas of the security researcher.</p>
+                <a href="About The Auditor.pdf" class="doc-link">View Document →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Consulting Agreement</h4>
+                <p>Formal terms of engagement and service expectations.</p>
+                <a href="Consulting Agreement.pdf" class="doc-link">View Document →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Authorization Letter</h4>
+                <p>Official campus authorization for the security audit.</p>
+                <a href="authorization-letter.pdf" class="doc-link">View Document →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Rules of Engagement</h4>
+                <p>Approved scope, allowed activities, and prohibited actions.</p>
+                <a href="Rules Of Engagement.pdf" class="doc-link">View Document →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Liability Waiver</h4>
+                <p>Risk acknowledgment and responsibility agreements.</p>
+                <a href="Liablity Waiver.pdf" class="doc-link">View Document →</a>
+            </div>
+            <div class="doc-card">
+                <h4>Audit Proposal</h4>
+                <p>Complete project proposal and methodology overview.</p>
+                <a href="Independent Security Audit Proposal.pdf" class="doc-link">View Document →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scope -->
+    <section id="scope" class="container">
+        <h2 class="section-title">Scope of Work</h2>
+        
+        <div class="scope-container">
+            <div class="scope-box">
+                <h3><i class="fas fa-check-circle"></i> In Scope (Allowed)</h3>
+                <ul>
+                    <li>OSINT & Public Reconnaissance</li>
+                    <li>Subdomain Enumeration</li>
+                    <li>Non-Intrusive Port Scanning</li>
+                    <li>SSL/TLS Configuration Review</li>
+                    <li>Security Header Evaluation</li>
+                    <li>Technology Fingerprinting</li>
+                    <li>Non-Destructive Vulnerability Testing</li>
+                    <li>Email Security Checks</li>
+                </ul>
+            </div>
+            
+            <div class="scope-box out-scope">
+                <h3><i class="fas fa-times-circle"></i> Out of Scope (Prohibited)</h3>
+                <ul>
+                    <li>Exploitation of Vulnerabilities</li>
+                    <li>Backend/Database Access</li>
+                    <li>Password Cracking</li>
+                    <li>DDoS or Stress Testing</li>
+                    <li>Social Engineering</li>
+                    <li>Payload Uploads</li>
+                    <li>Any Intrusive Actions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Website Link -->
+    <section class="container">
+        <div class="client-link">
+            <h3>Visit Resunga Multiple Campus Website</h3>
+            <a href="https://resungacampus.edu.np" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                resungacampus.edu.np
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Project Documents</h3>
+                    <a href="Consulting Agreement.pdf"><i class="fas fa-file-contract"></i> Consulting Agreement</a>
+                    <a href="authorization-letter.pdf"><i class="fas fa-scroll"></i> Authorization Letter</a>
+                    <a href="Rules Of Engagement.pdf"><i class="fas fa-tasks"></i> Rules of Engagement</a>
+                    <a href="Independent Security Audit Proposal.pdf"><i class="fas fa-clipboard-list"></i> Audit Proposal</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Auditor Information</h3>
+                    <a href="https://anujpanthi.com.np" target="_blank"><i class="fas fa-globe"></i> Portfolio Website</a>
+                    <a href="mailto:anujpanthi66@gmail.com"><i class="fas fa-envelope"></i> anujpanthi66@gmail.com</a>
+                    <a href="About The Auditor.pdf"><i class="fas fa-user"></i> About The Auditor</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Client Information</h3>
+                    <a href="https://resungacampus.edu.np" target="_blank"><i class="fas fa-university"></i> Resunga Multiple Campus</a>
+                    <a href="#"><i class="fas fa-map-marker-alt"></i> Tamghas, Gulmi, Nepal</a>
+                    <a href="mailto:resungacampus@gmail.com"><i class="fas fa-envelope"></i> resungacampus@gmail.com</a>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>Resunga Multiple Campus Security Audit Project. Conducted by Anuj Panthi as part of cybersecurity research.</p>
+                <p>All activities were authorized, ethical, and non-intrusive. This audit was conducted for educational and research purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Open PDFs in new tab
+        document.querySelectorAll('a[href$=".pdf"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // Allow opening in new tab if Ctrl or Cmd is pressed
+                if (!e.ctrlKey && !e.metaKey) {
+                    e.preventDefault();
+                    window.open(this.href, '_blank');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
