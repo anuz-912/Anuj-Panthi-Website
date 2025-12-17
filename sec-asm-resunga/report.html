@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-Sensitive Security Audit Report - Resunga Multiple Campus</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+            padding: 20px;
+            max-width: 210mm;
+            margin: 0 auto;
+        }
+        
+        .cover-page {
+            text-align: center;
+            padding: 100px 20px;
+            page-break-after: always;
+            border: 3px solid #c41e3a;
+            margin-bottom: 40px;
+        }
+        
+        .cover-page h1 {
+            font-size: 36px;
+            color: #c41e3a;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .cover-page h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        
+        .cover-metadata {
+            text-align: left;
+            display: inline-block;
+            margin-top: 60px;
+            border-top: 2px solid #c41e3a;
+            padding-top: 30px;
+        }
+        
+        .cover-metadata p {
+            font-size: 14px;
+            margin: 10px 0;
+            padding: 5px 0;
+        }
+        
+        .cover-metadata strong {
+            display: inline-block;
+            width: 180px;
+            color: #c41e3a;
+        }
+        
+        h1 {
+            color: #c41e3a;
+            font-size: 28px;
+            margin: 30px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #c41e3a;
+            page-break-after: avoid;
+        }
+        
+        h2 {
+            color: #2c5282;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            color: #2d3748;
+            font-size: 18px;
+            margin: 20px 0 10px 0;
+            page-break-after: avoid;
+        }
+        
+        h4 {
+            color: #4a5568;
+            font-size: 16px;
+            margin: 15px 0 10px 0;
+            page-break-after: avoid;
+        }
+        
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        
+        .executive-summary {
+            background: #f7fafc;
+            border-left: 5px solid #c41e3a;
+            padding: 20px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .risk-box {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin: 5px;
+            font-size: 14px;
+        }
+        
+        .critical {
+            background: #fed7d7;
+            color: #c53030;
+            border: 2px solid #c53030;
+        }
+        
+        .high {
+            background: #feebc8;
+            color: #c05621;
+            border: 2px solid #c05621;
+        }
+        
+        .medium {
+            background: #fef5e7;
+            color: #c27803;
+            border: 2px solid #c27803;
+        }
+        
+        .low {
+            background: #e6fffa;
+            color: #2c7a7b;
+            border: 2px solid #2c7a7b;
+        }
+        
+        .vulnerability-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .vulnerability-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .code-block.generic {
+            background: #f7fafc;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #3182ce;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .warning-box {
+            background: #fffaf0;
+            border-left: 4px solid #dd6b20;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        .sensitive-box {
+            background: #fff5f5;
+            border-left: 4px solid #c53030;
+            padding: 15px;
+            margin: 15px 0;
+            page-break-inside: avoid;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            page-break-inside: avoid;
+            font-size: 14px;
+        }
+        
+        th {
+            background: #2c5282;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li::before {
+            content: "✓ ";
+            color: #48bb78;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .checklist li.fail::before {
+            content: "✗ ";
+            color: #f56565;
+        }
+        
+        .page-break {
+            page-break-after: always;
+        }
+        
+        .toc {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            color: #c41e3a;
+            margin-top: 0;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .toc li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .toc a {
+            color: #2c5282;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        .ascii-art {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            line-height: 1.2;
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            white-space: pre;
+            margin: 20px 0;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            
+            .vulnerability-card,
+            .code-block,
+            .info-box,
+            .warning-box,
+            .sensitive-box,
+            table {
+                page-break-inside: avoid;
+            }
+            
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+            
+            .page-number {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                font-size: 10px;
+                color: #718096;
+            }
+            
+            .print-button,
+            .sensitive-warning {
+                display: none;
+            }
+        }
+        
+        .signature-section {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .signature-line {
+            border-bottom: 2px solid #333;
+            width: 300px;
+            margin: 40px 0 10px 0;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background: #a01629;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+        
+        .sensitive-warning {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: #c53030;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+        
+        .sensitive-warning i {
+            margin-right: 8px;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f7fafc;
+            padding: 10px 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 10px;
+            color: #718096;
+            text-align: center;
+            display: none;
+        }
+        
+        @media print {
+            .footer {
+                display: block;
+            }
+        }
+        
+        .redacted {
+            background: #2d3748;
+            color: #2d3748;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .redacted:hover {
+            color: #e2e8f0;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">📄 Print/Save as PDF</button>
+    <div class="sensitive-warning">
+        <i class="fas fa-eye-slash"></i> NON-SENSITIVE VERSION
+    </div>
+    
+    <!-- Cover Page -->
+    <div class="cover-page">
+        <h1>COMPREHENSIVE SECURITY AUDIT REPORT</h1>
+        <h2>Resunga Multiple Campus</h2>
+        
+        <div class="cover-metadata">
+            <p><strong>Report Type:</strong> <span style="color: #c53030;">NON-SENSITIVE PUBLICATION VERSION</span></p>
+            <p><strong>Organization:</strong> Resunga Multiple Campus</p>
+            <p><strong>Report Date:</strong> December 11, 2025</p>
+            <p><strong>Auditor:</strong> Anuj Panthi</p>
+            <p><strong>Title:</strong> Independent Cybersecurity Researcher</p>
+            <p><strong>Audit Type:</strong> External, Non-Intrusive Security Assessment</p>
+            <p><strong>Assessment Period:</strong> 30-Day Window</p>
+            <p><strong>Methodology:</strong> OWASP & NIST-aligned</p>
+            <p><strong>Classification:</strong> PUBLIC - FOR PORTFOLIO</p>
+        </div>
+        
+        <div class="sensitive-box" style="margin-top: 40px; max-width: 600px; text-align: left;">
+            <h4 style="color: #c53030; margin-top: 0;"><i class="fas fa-exclamation-triangle"></i> IMPORTANT NOTICE</h4>
+            <p style="font-size: 12px; text-align: left;">
+                This is a <strong>non-sensitive version</strong> of the original security audit report. 
+                All confidential information including specific IP addresses, internal domain names, 
+                API endpoints, and sensitive technical details have been redacted or generalized 
+                to protect institutional security while demonstrating assessment methodology 
+                and professional reporting standards.
+            </p>
+        </div>
+    </div>
+    
+    <!-- Table of Contents -->
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#executive-summary">1. Executive Summary</a></li>
+            <li><a href="#scope">2. Audit Scope & Methodology</a></li>
+            <li><a href="#asset-discovery">3. Asset Discovery & Inventory</a></li>
+            <li><a href="#critical-vulnerabilities">4. Critical Vulnerabilities</a></li>
+            <li><a href="#high-risk">5. High Risk Vulnerabilities</a></li>
+            <li><a href="#medium-risk">6. Medium Risk Vulnerabilities</a></li>
+            <li><a href="#low-risk">7. Low Risk Findings</a></li>
+            <li><a href="#security-strengths">8. Security Strengths Identified</a></li>
+            <li><a href="#remediation">9. Remediation Prioritization Matrix</a></li>
+            <li><a href="#technical-recommendations">10. Technical Recommendations</a></li>
+            <li><a href="#conclusion">11. Conclusion</a></li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Executive Summary -->
+    <div id="executive-summary">
+        <h1>1. Executive Summary</h1>
+        
+        <div class="executive-summary">
+            <p>This comprehensive security audit examined the publicly accessible digital infrastructure of an educational institution. The assessment followed strict non-intrusive methodologies and focused on identifying potential vulnerabilities in internet-facing systems without attempting exploitation.</p>
+        </div>
+        
+        <h2>Key Findings Overview</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Critical</div>
+                <div class="stat-number" style="color: #c53030;">1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">High</div>
+                <div class="stat-number" style="color: #c05621;">2</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Medium</div>
+                <div class="stat-number" style="color: #c27803;">5</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Low</div>
+                <div class="stat-number" style="color: #2c7a7b;">7</div>
+            </div>
+        </div>
+        
+        <h3>Risk Distribution</h3>
+        <div class="info-box">
+            <p><span class="risk-box critical">CRITICAL: 1</span> Exposed system documentation revealing complete application blueprint</p>
+            <p><span class="risk-box high">HIGH: 2</span> SSL/TLS certificate misconfigurations affecting multiple systems</p>
+            <p><span class="risk-box medium">MEDIUM: 5</span> Email security deficiencies and configuration issues</p>
+            <p><span class="risk-box low">LOW: 7</span> Implementation flaws and minor configuration weaknesses</p>
+        </div>
+        
+        <h3>Overall Security Posture</h3>
+        <p>The organization demonstrates <strong>moderate security maturity</strong> with several critical areas requiring immediate attention. While basic security controls are in place (firewall, authentication), significant information exposure and configuration issues present substantial attack surface reduction opportunities.</p>
+        
+        <div class="warning-box">
+            <strong>⚠️ Immediate Action Required:</strong> The exposure of complete system documentation represents a critical security risk that must be addressed within 24 hours.
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Scope & Methodology -->
+    <div id="scope">
+        <h1>2. Audit Scope & Methodology</h1>
+        
+        <h2>2.1 Scope of Testing</h2>
+        
+        <h3>INCLUDED:</h3>
+        <ul>
+            <li>OSINT and public information gathering</li>
+            <li>Subdomain enumeration via DNS and certificate transparency</li>
+            <li>Non-intrusive port/service scanning</li>
+            <li>SSL/TLS configuration analysis</li>
+            <li>Security header evaluation</li>
+            <li>Technology stack fingerprinting</li>
+            <li>Non-destructive vulnerability testing</li>
+            <li>Authentication/session behavior review</li>
+            <li>Public endpoint access control verification</li>
+            <li>Directory and file exposure checks</li>
+            <li>Email security protocols (SPF, DKIM, DMARC)</li>
+        </ul>
+        
+        <h3>EXCLUDED:</h3>
+        <ul>
+            <li>Exploitation of identified vulnerabilities</li>
+            <li>Backend/database access attempts</li>
+            <li>Password cracking or brute-force attacks</li>
+            <li>Payload uploads or malware testing</li>
+            <li>DDoS or stress testing</li>
+            <li>Social engineering</li>
+            <li>Any intrusive or unauthorized activities</li>
+        </ul>
+        
+        <h2>2.2 Testing Timeline</h2>
+        <table>
+            <tr>
+                <th>Phase</th>
+                <th>Duration</th>
+                <th>Dates</th>
+            </tr>
+            <tr>
+                <td>Reconnaissance Phase</td>
+                <td>7 days</td>
+                <td>November 2025</td>
+            </tr>
+            <tr>
+                <td>Active Testing Phase</td>
+                <td>3 days</td>
+                <td>December 2025</td>
+            </tr>
+            <tr>
+                <td>Reporting Phase</td>
+                <td>1 day</td>
+                <td>December 11, 2025</td>
+            </tr>
+        </table>
+        
+        <h2>2.3 Tools Used</h2>
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Tools</th>
+            </tr>
+            <tr>
+                <td>Network Scanning</td>
+                <td>Nmap</td>
+            </tr>
+            <tr>
+                <td>HTTP Analysis</td>
+                <td>curl, whatweb</td>
+            </tr>
+            <tr>
+                <td>Vulnerability Scanning</td>
+                <td>nuclei (limited scope)</td>
+            </tr>
+            <tr>
+                <td>SSL Analysis</td>
+                <td>openssl, testssl.sh</td>
+            </tr>
+            <tr>
+                <td>DNS Analysis</td>
+                <td>nslookup, dig</td>
+            </tr>
+            <tr>
+                <td>Subdomain Discovery</td>
+                <td>subfinder, crt.sh</td>
+            </tr>
+            <tr>
+                <td>Email Security</td>
+                <td>mxtoolbox.com</td>
+            </tr>
+            <tr>
+                <td>Manual Testing</td>
+                <td>Browser inspection, console analysis</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Asset Discovery -->
+    <div id="asset-discovery">
+        <h1>3. Asset Discovery & Inventory</h1>
+        
+        <div class="sensitive-box">
+            <p><strong><i class="fas fa-eye-slash"></i> SENSITIVE DATA REDACTED:</strong> Original asset discovery section contained specific domain names, IP addresses, and infrastructure details that have been removed for security reasons.</p>
+        </div>
+        
+        <h2>3.1 Infrastructure Overview</h2>
+        <table>
+            <tr>
+                <th>Property</th>
+                <th>Generalized Findings</th>
+            </tr>
+            <tr>
+                <td>Primary Systems</td>
+                <td>Web application, administrative interfaces, email services</td>
+            </tr>
+            <tr>
+                <td>Hosting Infrastructure</td>
+                <td>Cloud-based hosting with multiple service providers</td>
+            </tr>
+            <tr>
+                <td>DNS Configuration</td>
+                <td>Multiple name servers with international distribution</td>
+            </tr>
+            <tr>
+                <td>Network Services</td>
+                <td>HTTP, HTTPS, SSH, FTP services detected</td>
+            </tr>
+        </table>
+        
+        <h2>3.2 Subdomain Analysis</h2>
+        <div class="info-box">
+            <p><strong>Assessment:</strong> Multiple subdomains were identified serving various functions including administrative interfaces, email services, and specialized applications.</p>
+        </div>
+        
+        <table>
+            <tr>
+                <th>Subdomain Type</th>
+                <th>Function</th>
+                <th>Security Status</th>
+            </tr>
+            <tr>
+                <td>Administrative</td>
+                <td>Management interfaces</td>
+                <td>❌ Security issues identified</td>
+            </tr>
+            <tr>
+                <td>Email Services</td>
+                <td>Email hosting and webmail</td>
+                <td>⚠️ Mixed security posture</td>
+            </tr>
+            <tr>
+                <td>Application Services</td>
+                <td>Specialized applications</td>
+                <td>⚠️ Configuration issues</td>
+            </tr>
+            <tr>
+                <td>Control Panels</td>
+                <td>Management consoles</td>
+                <td>❌ Insecure implementations</td>
+            </tr>
+        </table>
+        
+        <h2>3.3 Network Service Analysis</h2>
+        <div class="code-block generic">
+PORT     STATE    SERVICE          SECURITY ASSESSMENT
+21/tcp   open     ftp              Access properly restricted
+22/tcp   open     ssh              Standard service detected
+25/tcp   filtered smtp             Firewall protection active
+80/tcp   open     http             Active web service
+443/tcp  open     https            Encrypted web service
+3306/tcp filtered mysql            Database access restricted
+3389/tcp filtered ms-wbt-server    Remote access blocked
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Critical Vulnerabilities -->
+    <div id="critical-vulnerabilities">
+        <h1>4. Critical Vulnerabilities</h1>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box critical">CRITICAL</span> Exposed System Documentation with Complete Application Blueprint</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>9.1 (Critical)</strong></td>
+                </tr>
+                <tr>
+                    <td>Impact</td>
+                    <td>Complete information disclosure of system architecture</td>
+                </tr>
+                <tr>
+                    <td>Attack Vector</td>
+                    <td>Network (remotely exploitable)</td>
+                </tr>
+            </table>
+            
+            <h4>Technical Details:</h4>
+            <ul>
+                <li><strong>Exposure Type:</strong> Publicly accessible system documentation</li>
+                <li><strong>Content Exposed:</strong> Complete API specifications, endpoint details, authentication mechanisms</li>
+                <li><strong>Documentation Format:</strong> Automated API documentation system</li>
+                <li><strong>Authentication:</strong> None required for access</li>
+            </ul>
+            
+            <h4>Exposed Information Categories:</h4>
+            
+            <p><strong>1. Administrative Management:</strong></p>
+            <div class="code-block generic">
+/api/[REDACTED]/GetAdminProfile
+/api/[REDACTED]/CreateAdmin
+/api/[REDACTED]/UpdateAdmin
+/api/[REDACTED]/DeleteAdmin
+            </div>
+            
+            <p><strong>2. Authentication Systems:</strong></p>
+            <div class="code-block generic">
+/api/[REDACTED]/Login
+/api/[REDACTED]/ResetPassword
+/api/[REDACTED]/ChangePassword
+/api/[REDACTED]/SessionManagement
+            </div>
+            
+            <p><strong>3. Data Models and Schemas:</strong></p>
+            <ul>
+                <li>Complete request/response structures</li>
+                <li>Parameter validation rules</li>
+                <li>Error message formats</li>
+                <li>Database schema information</li>
+            </ul>
+            
+            <h4>Risk Assessment:</h4>
+            <table>
+                <tr>
+                    <th>Factor</th>
+                    <th>Rating</th>
+                </tr>
+                <tr>
+                    <td>Attack Vector</td>
+                    <td>Network (remotely exploitable)</td>
+                </tr>
+                <tr>
+                    <td>Attack Complexity</td>
+                    <td>Low (documentation provides clear guidance)</td>
+                </tr>
+                <tr>
+                    <td>Privileges Required</td>
+                    <td>None (publicly accessible)</td>
+                </tr>
+                <tr>
+                    <td>User Interaction</td>
+                    <td>None</td>
+                </tr>
+                <tr>
+                    <td>Confidentiality Impact</td>
+                    <td>High (complete system blueprint)</td>
+                </tr>
+                <tr>
+                    <td>Integrity Impact</td>
+                    <td>High (informs attack strategies)</td>
+                </tr>
+            </table>
+            
+            <div class="warning-box">
+                <strong>⚠️ Immediate Remediation Required:</strong> While endpoints may require authentication, the exposed documentation provides attackers with a complete system roadmap for targeted attacks, significantly reducing the effort required for successful exploitation.
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- High Risk Vulnerabilities -->
+    <div id="high-risk">
+        <h1>5. High Risk Vulnerabilities</h1>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box high">HIGH</span> SSL/TLS Certificate Misconfiguration</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>7.4 (High)</strong></td>
+                </tr>
+                <tr>
+                    <td>Affected Systems</td>
+                    <td>Multiple critical subdomains</td>
+                </tr>
+            </table>
+            
+            <h4>Issues Identified:</h4>
+            <ol>
+                <li><strong>Certificate Name Mismatch:</strong> Certificates issued for incorrect domain names</li>
+                <li><strong>Shared Certificates:</strong> Single certificate used across multiple unrelated domains</li>
+                <li><strong>Certificate Validation Issues:</strong> Browser security warnings triggered</li>
+            </ol>
+            
+            <h4>SSL Configuration Security:</h4>
+            <ul class="checklist">
+                <li>SSLv2/SSLv3/TLSv1.0/TLSv1.1: Disabled</li>
+                <li>TLSv1.2/TLSv1.3: Enabled</li>
+                <li>Heartbleed: Not vulnerable</li>
+                <li>TLS Compression: Disabled</li>
+                <li>RSA Key Strength: 2048 bits (Adequate)</li>
+                <li>Cipher Suites: Modern, secure selection</li>
+            </ul>
+            
+            <h4>Risk Impact:</h4>
+            <ul>
+                <li>Certificate Mismatch: Browser security warnings, potential MITM opportunities</li>
+                <li>Shared Certificate: Cross-domain contamination risk</li>
+                <li>Trust Issues: Users may reject security warnings, leading to phishing susceptibility</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box high">HIGH</span> Missing HTTPS for Critical Administrative Interfaces</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>6.5 (Medium-High)</strong></td>
+                </tr>
+                <tr>
+                    <td>Affected Systems</td>
+                    <td>Administrative control panels</td>
+                </tr>
+            </table>
+            
+            <h4>Technical Details:</h4>
+            <div class="code-block generic">
+Service scan results for administrative interface:
+HTTP (80/tcp):  Active - UNENCRYPTED ACCESS
+HTTPS (443/tcp): Certificate issues detected
+            </div>
+            
+            <h4>Risk Assessment:</h4>
+            <ul>
+                <li><strong>Administrative Interface:</strong> Critical system accessible via unencrypted HTTP</li>
+                <li><strong>Credential Exposure:</strong> Login credentials transmitted in plaintext</li>
+                <li><strong>Session Hijacking:</strong> Cookies and sessions vulnerable to interception</li>
+                <li><strong>Compliance Violation:</strong> Fails basic security standards</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Medium Risk Vulnerabilities -->
+    <div id="medium-risk">
+        <h1>6. Medium Risk Vulnerabilities</h1>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box medium">MEDIUM</span> Email Security Deficiencies</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>5.3 (Medium)</strong></td>
+                </tr>
+                <tr>
+                    <td>Domain</td>
+                    <td>Institutional email domain</td>
+                </tr>
+            </table>
+            
+            <h4>MX Toolbox Analysis Results:</h4>
+            
+            <p><strong>1. DMARC Issues:</strong></p>
+            <ul>
+                <li>No DMARC Record found</li>
+                <li>Missing quarantine or reject policy</li>
+            </ul>
+            
+            <p><strong>2. SPF Issues:</strong></p>
+            <ul>
+                <li>SPF Record exists but DMARC missing</li>
+                <li>Limited protection against spoofing</li>
+            </ul>
+            
+            <div class="code-block generic">
+v=spf1 ip4:[REDACTED] include:[REDACTED] ~all
+            </div>
+            
+            <p><strong>3. DNS Configuration Issues:</strong></p>
+            <ul>
+                <li>Name server configuration inconsistencies</li>
+                <li>Suboptimal DNS architecture</li>
+            </ul>
+            
+            <h4>Risk Impact:</h4>
+            <ul>
+                <li>Email Spoofing: Lack of DMARC allows domain impersonation</li>
+                <li>Phishing Attacks: Easier for attackers to send emails appearing from institutional domain</li>
+                <li>Email Delivery Issues: Potential for legitimate emails to be marked as spam</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box medium">MEDIUM</span> Mixed Content Security Issue</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>5.0 (Medium)</strong></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>Primary web application</td>
+                </tr>
+            </table>
+            
+            <h4>Technical Details:</h4>
+            <ul>
+                <li>Primary Page: Loaded over HTTPS</li>
+                <li>Insecure Resources: Third-party scripts loaded via HTTP</li>
+            </ul>
+            
+            <div class="code-block generic">
+&lt;script src="http://[REDACTED]/script.js"&gt;&lt;/script&gt;
+            </div>
+            
+            <h4>Risk Impact:</h4>
+            <ul>
+                <li>MITM Attacks: Insecure scripts can be modified in transit</li>
+                <li>Browser Warnings: Security alerts confuse users</li>
+                <li>Content Integrity: Cannot guarantee script authenticity</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box medium">MEDIUM</span> Information Leakage in Application Systems</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>4.3 (Medium)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Issues Identified:</h4>
+            <p><strong>1. Test Data in Production:</strong></p>
+            <ul>
+                <li>Development/test data visible in production systems</li>
+                <li>Default user accounts with improper permissions</li>
+            </ul>
+            
+            <p><strong>2. Broken Functionality:</strong></p>
+            <ul>
+                <li>Non-functional interface elements</li>
+                <li>Error-prone user interactions</li>
+                <li>Console errors during normal operation</li>
+            </ul>
+            
+            <p><strong>3. Debug Information:</strong></p>
+            <div class="code-block generic">
+Console error messages revealing internal system details
+Authentication error information leakage
+            </div>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box medium">MEDIUM</span> Insecure Subdomain Implementations</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>4.0 (Medium)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Affected Systems:</h4>
+            <ol>
+                <li><strong>Control Panel Subdomains:</strong> Insecure authentication mechanisms</li>
+                <li><strong>Service Subdomains:</strong> JavaScript-based credential collection</li>
+                <li><strong>Application Subdomains:</strong> Error-prone implementations</li>
+                <li><strong>Development Subdomains:</strong> Internal server errors exposed</li>
+            </ol>
+            
+            <h4>Risk Impact:</h4>
+            <ul>
+                <li>Credential Theft: Insecure credential collection methods</li>
+                <li>Phishing Susceptibility: Users trained to enter credentials in popups</li>
+                <li>Information Disclosure: Error pages may reveal system details</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Low Risk Findings -->
+    <div id="low-risk">
+        <h1>7. Low Risk Findings</h1>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box low">LOW</span> UI/UX Flaws and Content Issues</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>2.5 (Low)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Issues Identified:</h4>
+            <ol>
+                <li><strong>External Link Issues:</strong> Misconfigured social media links</li>
+                <li><strong>Content Currency:</strong> Outdated copyright and information</li>
+                <li><strong>Server Errors:</strong> Non-critical functionality returning errors</li>
+                <li><strong>Empty Content Sections:</strong> Unpopulated information areas</li>
+                <li><strong>Broken Features:</strong> Non-functional interface elements</li>
+                <li><strong>Robots.txt:</strong> Improper implementation</li>
+            </ol>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box low">LOW</span> Directory Traversal Attempts (Properly Blocked)</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>1.0 (Low - Successfully Mitigated)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Testing Results:</h4>
+            <div class="code-block generic">
+Testing sensitive file access:
+/.env: 403 Forbidden (Properly blocked)
+/config.php: 404 Not Found
+/backup.zip: 404 Not Found
+/.git/: 403 Forbidden (Properly blocked)
+            </div>
+            
+            <h4>Security Controls Working:</h4>
+            <ul class="checklist">
+                <li>WAF/OpenResty: Properly blocks sensitive directory access</li>
+                <li>Access Controls: 403 Forbidden for protected resources</li>
+                <li>Error Handling: 404 for non-existent resources (no information leakage)</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box low">LOW</span> Session Management Implementation</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>2.0 (Low)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Cookie Analysis:</h4>
+            <div class="code-block generic">
+set-cookie: XSRF-TOKEN=[REDACTED]; secure; samesite=lax
+set-cookie: session_cookie=[REDACTED]; httponly; samesite=lax; secure
+            </div>
+            
+            <h4>Security Assessment:</h4>
+            <ul class="checklist">
+                <li>Secure Flag: Present on both cookies</li>
+                <li>HttpOnly Flag: Present on session cookie (protects against XSS)</li>
+                <li>SameSite=Lax: CSRF protection</li>
+                <li class="fail">Missing: Strict-Transport-Security header</li>
+                <li class="fail">Missing: Content-Security-Policy header</li>
+            </ul>
+        </div>
+        
+        <div class="vulnerability-card">
+            <h3><span class="risk-box low">LOW</span> SQL Injection & XSS Testing Results (Negative)</h3>
+            
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>CVSS Score</td>
+                    <td><strong>0.0 (Informational - No Vulnerability Found)</strong></td>
+                </tr>
+            </table>
+            
+            <h4>Testing Results:</h4>
+            <p><strong>SQL Injection Testing:</strong></p>
+            <ul>
+                <li>Input Validation: Properly implemented</li>
+                <li>Error Handling: No SQL error messages leaked</li>
+                <li>Authentication: Proper responses for unauthorized access</li>
+            </ul>
+            
+            <p><strong>Cross-Site Scripting Testing:</strong></p>
+            <ul>
+                <li>Output Encoding: Properly implemented</li>
+                <li>Input Sanitization: Script tags not reflected in output</li>
+                <li>Content-Type: Properly set</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Security Strengths -->
+    <div id="security-strengths">
+        <h1>8. Security Strengths Identified</h1>
+        
+        <div class="info-box">
+            <h3>Positive Security Controls</h3>
+        </div>
+        
+        <h2>8.1 Active Firewall/WAF Protection</h2>
+        <ul>
+            <li><strong>Evidence:</strong> IP blocking after security scanning detected</li>
+            <li><strong>Technology:</strong> Modern WAF solution implemented</li>
+            <li><strong>Effectiveness:</strong> Successfully blocked intrusion attempts</li>
+            <li><strong>Configuration:</strong> Proper 403 responses for protected resources</li>
+        </ul>
+        
+        <h2>8.2 Proper Authentication Enforcement</h2>
+        <ul>
+            <li><strong>API Systems:</strong> Proper 401 Unauthorized for admin endpoints</li>
+            <li><strong>No User Enumeration:</strong> Consistent responses regardless of username</li>
+            <li><strong>Input Validation:</strong> Proper validation for malformed queries</li>
+        </ul>
+        
+        <h2>8.3 Secure Session Management</h2>
+        <ul>
+            <li><strong>HttpOnly Cookies:</strong> Session cookie protected from JavaScript access</li>
+            <li><strong>Secure Flag:</strong> Cookies only transmitted over HTTPS</li>
+            <li><strong>SameSite=Lax:</strong> CSRF protection implemented</li>
+        </ul>
+        
+        <h2>8.4 Directory Protection</h2>
+        <ul>
+            <li><strong>Sensitive Files:</strong> Properly blocked with 403 responses</li>
+            <li><strong>Error Handling:</strong> 404 for non-existent resources (no information leak)</li>
+            <li><strong>Access Controls:</strong> Directories properly protected</li>
+        </ul>
+        
+        <h2>8.5 Modern TLS Configuration</h2>
+        <ul class="checklist">
+            <li>Protocols: TLSv1.2 and TLSv1.3 only (older versions disabled)</li>
+            <li>Ciphers: Modern, secure cipher suites</li>
+            <li>Key Exchange: Forward-secure algorithms implemented</li>
+            <li>Compression: Disabled (CRIME attack protection)</li>
+        </ul>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Remediation Prioritization -->
+    <div id="remediation">
+        <h1>9. Remediation Prioritization Matrix</h1>
+        
+        <h2>9.1 Immediate Actions (Within 24 Hours)</h2>
+        
+        <table>
+            <tr>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>Owner</th>
+                <th>Effort</th>
+            </tr>
+            <tr style="background: #fed7d7;">
+                <td><strong>CRITICAL #1</strong></td>
+                <td>Remove Public System Documentation</td>
+                <td>Development Team</td>
+                <td>Low</td>
+            </tr>
+            <tr style="background: #fed7d7;">
+                <td><strong>CRITICAL #2</strong></td>
+                <td>Fix Admin HTTPS Certificate Issues</td>
+                <td>IT Administrator</td>
+                <td>Medium</td>
+            </tr>
+        </table>
+        
+        <h2>9.2 Short-Term Actions (Within 7 Days)</h2>
+        
+        <table>
+            <tr>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>Owner</th>
+                <th>Effort</th>
+            </tr>
+            <tr style="background: #feebc8;">
+                <td><strong>HIGH #3</strong></td>
+                <td>Implement DMARC Policy</td>
+                <td>IT Administrator</td>
+                <td>Low</td>
+            </tr>
+            <tr style="background: #feebc8;">
+                <td><strong>HIGH #4</strong></td>
+                <td>Fix SSL Certificate Mismatches</td>
+                <td>IT Administrator</td>
+                <td>Medium</td>
+            </tr>
+            <tr style="background: #fef5e7;">
+                <td><strong>MEDIUM #5</strong></td>
+                <td>Secure Insecure Subdomains</td>
+                <td>Development Team</td>
+                <td>High</td>
+            </tr>
+            <tr style="background: #fef5e7;">
+                <td><strong>MEDIUM #6</strong></td>
+                <td>Fix Mixed Content Issues</td>
+                <td>Development Team</td>
+                <td>Low</td>
+            </tr>
+        </table>
+        
+        <h2>9.3 Medium-Term Actions (Within 30 Days)</h2>
+        
+        <table>
+            <tr>
+                <th>Priority</th>
+                <th>Action</th>
+                <th>Owner</th>
+                <th>Effort</th>
+            </tr>
+            <tr style="background: #fef5e7;">
+                <td><strong>MEDIUM #7</strong></td>
+                <td>DNS Configuration Cleanup</td>
+                <td>IT Administrator</td>
+                <td>Medium</td>
+            </tr>
+            <tr style="background: #fef5e7;">
+                <td><strong>MEDIUM #8</strong></td>
+                <td>WAF Tuning and Optimization</td>
+                <td>Security Team</td>
+                <td>Medium</td>
+            </tr>
+            <tr style="background: #e6fffa;">
+                <td><strong>LOW #9</strong></td>
+                <td>UI/UX Improvements</td>
+                <td>Content Team</td>
+                <td>Low</td>
+            </tr>
+            <tr style="background: #e6fffa;">
+                <td><strong>LOW #10</strong></td>
+                <td>Security Headers Enhancement</td>
+                <td>Development Team</td>
+                <td>Medium</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Technical Recommendations -->
+    <div id="technical-recommendations">
+        <h1>10. Technical Recommendations</h1>
+        
+        <h2>10.1 SSL/TLS Configuration</h2>
+        
+        <h3>Recommended nginx configuration:</h3>
+        <div class="code-block">
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512;
+ssl_prefer_server_ciphers off;
+ssl_session_cache shared:SSL:10m;
+ssl_session_timeout 10m;
+add_header Strict-Transport-Security "max-age=63072000" always;
+        </div>
+        
+        <h3>Certificate Management:</h3>
+        <ul>
+            <li><strong>Tool:</strong> Automated certificate management with monitoring</li>
+            <li><strong>Monitoring:</strong> Certificate expiration alerts</li>
+            <li><strong>Documentation:</strong> Certificate inventory with ownership</li>
+        </ul>
+        
+        <h2>10.2 API Security Hardening</h2>
+        
+        <h3>Documentation Protection:</h3>
+        <div class="code-block">
+// Production environment configuration
+if (!env.IsDevelopment())
+{
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+        c.RoutePrefix = "api-docs";  // Custom path
+        c.DocumentTitle = "Internal API Documentation";
+    });
+    
+    // Add authentication middleware
+    app.UseMiddleware&lt;SwaggerAuthMiddleware&gt;();
+}
+        </div>
+        
+        <h3>API Endpoint Protection:</h3>
+        <ul>
+            <li><strong>Rate Limiting:</strong> Implement per-IP and per-user limits</li>
+            <li><strong>Input Validation:</strong> Schema validation for all endpoints</li>
+            <li><strong>Output Filtering:</strong> Remove sensitive data from responses</li>
+            <li><strong>Audit Logging:</strong> All admin actions logged with user context</li>
+        </ul>
+        
+        <h2>10.3 Email Security Implementation</h2>
+        
+        <h3>DMARC Configuration:</h3>
+        <div class="code-block">
+_dmarc.example.edu.np. IN TXT "v=DMARC1; p=none; rua=mailto:dmarc-reports@example.edu.np; ruf=mailto:dmarc-forensics@example.edu.np;"
+        </div>
+        
+        <h3>SPF Record Enhancement:</h3>
+        <div class="code-block">
+example.edu.np. IN TXT "v=spf1 ip4:[SERVER_IP] include:[HOSTING_PROVIDER] -all"
+        </div>
+        
+        <h3>DKIM Implementation:</h3>
+        <ul>
+            <li><strong>Action:</strong> Generate and publish DKIM keys</li>
+            <li><strong>Selector:</strong> Default selector with proper rotation</li>
+            <li><strong>Key Size:</strong> 2048-bit RSA minimum</li>
+            <li><strong>Rotation:</strong> Quarterly key rotation schedule</li>
+        </ul>
+        
+        <h2>10.4 Security Headers Implementation</h2>
+        
+        <h3>Recommended Headers:</h3>
+        <div class="code-block">
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://trusted.cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none';";
+add_header X-Frame-Options "DENY";
+add_header X-Content-Type-Options "nosniff";
+add_header Referrer-Policy "strict-origin-when-cross-origin";
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()";
+        </div>
+    </div>
+    
+    <div class="page-break"></div>
+    
+    <!-- Conclusion -->
+    <div id="conclusion">
+        <h1>11. Conclusion</h1>
+        
+        <h2>11.1 Overall Security Posture Assessment</h2>
+        
+        <p>The assessed organization demonstrates <strong>mixed security maturity</strong> with both significant strengths and critical vulnerabilities. Basic security controls including firewall protection, secure session management, and input validation are implemented. However, the exposure of complete system documentation represents a critical risk that requires immediate attention.</p>
+        
+        <div class="info-box">
+            <h3 style="margin-top: 0;">Security Maturity Score: 55/100</h3>
+            <p style="margin-bottom: 0;"><em>(Based on weighted vulnerability assessment)</em></p>
+        </div>
+        
+        <h2>11.2 Key Successes</h2>
+        <ol>
+            <li><strong>Active Security Monitoring:</strong> WAF successfully blocked intrusive scanning</li>
+            <li><strong>Authentication Controls:</strong> Proper 401 responses and no user enumeration</li>
+            <li><strong>Session Security:</strong> HttpOnly, Secure, and SameSite cookies implemented</li>
+            <li><strong>TLS Configuration:</strong> Modern protocols and ciphers enabled</li>
+            <li><strong>Input Validation:</strong> No SQLi or XSS vulnerabilities detected</li>
+        </ol>
+        
+        <h2>11.3 Critical Concerns</h2>
+        <ol>
+            <li><strong>Information Disclosure:</strong> Complete system blueprint publicly accessible</li>
+            <li><strong>Certificate Issues:</strong> Mismatched subjects and shared certificates</li>
+            <li><strong>Email Security:</strong> No DMARC implementation enabling spoofing</li>
+            <li><strong>Insecure Subdomains:</strong> Insecure authentication mechanisms</li>
+            <li><strong>Mixed Content:</strong> HTTP resources in HTTPS pages</li>
+        </ol>
+        
+        <h2>11.4 Strategic Recommendations</h2>
+        
+        <table>
+            <tr>
+                <th>Timeline</th>
+                <th>Priority Actions</th>
+            </tr>
+            <tr style="background: #fed7d7;">
+                <td><strong>Immediate (Week 1)</strong></td>
+                <td>
+                    1. Remove public system documentation<br>
+                    2. Fix critical HTTPS certificate issues<br>
+                    3. Implement DMARC policy
+                </td>
+            </tr>
+            <tr style="background: #feebc8;">
+                <td><strong>Short-Term (Month 1)</strong></td>
+                <td>
+                    4. Conduct security awareness training<br>
+                    5. Implement comprehensive security headers<br>
+                    6. Fix all certificate mismatches
+                </td>
+            </tr>
+            <tr style="background: #fef5e7;">
+                <td><strong>Medium-Term (Quarter 1)</strong></td>
+                <td>
+                    7. Establish security monitoring program<br>
+                    8. Conduct penetration testing<br>
+                    9. Develop incident response plan
+                </td>
+            </tr>
+        </table>
+        
+        <h2>11.5 Final Assessment</h2>
+        
+        <p>The organization has established a foundation for security but requires focused effort to address critical vulnerabilities. With the remediation actions outlined in this report, significant attack surface reduction can be achieved, improving security posture to protect institutional data and maintain service availability.</p>
+        
+        <div class="warning-box">
+            <h4>Next Steps:</h4>
+            <ol style="margin: 10px 0 0 20px;">
+                <li>Prioritize remediation based on risk matrix</li>
+                <li>Implement monitoring for critical security controls</li>
+                <li>Consider regular security assessments for continuous improvement</li>
+                <li>Develop comprehensive security policies and procedures</li>
+            </ol>
+        </div>
+        
+        <div class="signature-section">
+            <p><strong>Auditor:</strong> Anuj Panthi</p>
+            <p><strong>Title:</strong> Independent Cybersecurity Researcher</p>
+            <p><strong>Date:</strong> December 11, 2025</p>
+        </div>
+        
+        <div class="sensitive-box" style="margin-top: 40px;">
+            <h4><i class="fas fa-eye-slash"></i> Confidentiality Notice</h4>
+            <p>This non-sensitive version has been prepared for publication purposes. The original confidential report contains sensitive security information including specific IP addresses, domain names, API endpoints, and detailed technical configurations that have been redacted in this version to protect institutional security.</p>
+            <p style="font-size: 12px; margin-top: 10px;">
+                <strong>Publication Authorization:</strong> This non-sensitive version may be published on the auditor's portfolio (anujpanthi.com.np) with full credit to Anuj Panthi, subject to organizational approval as documented in the final acknowledgement letter.
+            </p>
+        </div>
+    </div>
+    
+    <!-- End of Report -->
+    <div style="margin-top: 60px; padding-top: 30px; border-top: 3px solid #c41e3a; text-align: center;">
+        <h2 style="color: #c41e3a;">END OF NON-SENSITIVE REPORT</h2>
+        <p style="font-size: 12px; color: #718096; margin-top: 20px;">
+            Generated on December 11, 2025<br>
+            Comprehensive Security Audit Report - Non-Sensitive Version<br>
+            Auditor: Anuj Panthi | anujpanthi.com.np
+        </p>
+        <p style="font-size: 11px; color: #c53030; margin-top: 10px; font-style: italic;">
+            This is a non-sensitive publication version. Original confidential report contains additional sensitive details.
+        </p>
+    </div>
+
+    <div class="footer">
+        <span>Non-Sensitive Security Audit Report - Educational Institution</span> | 
+        <span>Page <span class="page-number"></span></span> | 
+        <span>December 11, 2025</span>
+    </div>
+
+    <script>
+        // Add page numbers for print
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.matchMedia('print').matches) {
+                const pages = document.querySelectorAll('.page-break, .cover-page');
+                const pageNumbers = document.querySelectorAll('.page-number');
+                
+                pageNumbers.forEach((el, index) => {
+                    el.textContent = index + 1;
+                });
+            }
+        });
+
+        // Interactive redacted text
+        document.querySelectorAll('.redacted').forEach(el => {
+            el.addEventListener('click', function() {
+                this.style.color = this.style.color === 'rgb(226, 232, 240)' ? '#2d3748' : '#e2e8f0';
+            });
+        });
+    </script>
+</body>
+</html>
