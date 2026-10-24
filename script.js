@@ -140,7 +140,7 @@ const animateGitHubStats = () => {
     const followers = document.getElementById('followers');
     if (repoCount && followers) {
         let repoCountNum = 0, followersNum = 0;
-        const targetRepoCount = 5, targetFollowers = 0;
+        const targetRepoCount = 6, targetFollowers = 0;
         const incrementStats = () => {
             if (repoCountNum < targetRepoCount) {
                 repoCountNum += Math.ceil(targetRepoCount / 50);
@@ -174,13 +174,11 @@ document.querySelectorAll('.floating-element').forEach((element, index) => {
 
 const heroMain = document.querySelector('.hero-main');
 const heroSub = document.querySelector('.hero-sub');
-const vibeCoderTag = document.querySelector('.vibe-coder-tag');
 
-if (heroMain && heroSub && vibeCoderTag) {
+if (heroMain && heroSub) {
     const mainText = heroMain.textContent.trim();
     heroMain.textContent = ''; // clear for typing
     heroSub.style.opacity = '0'; // hide subtitle
-    vibeCoderTag.style.opacity = '0'; // hide vibe coder tag
 
     let i = 0;
     const typeMain = () => {
@@ -193,20 +191,6 @@ if (heroMain && heroSub && vibeCoderTag) {
             setTimeout(() => {
                 heroSub.style.opacity = '1';
                 heroSub.style.transition = 'opacity 1s ease';
-                
-                // Fade in vibe coder tag after subtitle
-                setTimeout(() => {
-                    vibeCoderTag.style.opacity = '1';
-                    vibeCoderTag.style.transition = 'opacity 1s ease';
-                    
-                    // Add music note animation
-                    const musicNotes = ['🎵', '🎶', '🎧', '🎹', '🎼'];
-                    let noteIndex = 0;
-                    setInterval(() => {
-                        vibeCoderTag.textContent = `Vibe Coder ${musicNotes[noteIndex]}✨`;
-                        noteIndex = (noteIndex + 1) % musicNotes.length;
-                    }, 2000);
-                }, 500);
             }, 500);
         }
     };
@@ -240,7 +224,6 @@ window.addEventListener('error', (e) => {
         console.warn('Particles.js failed to load, continuing without background animation.');
     }
 });
-
 
 // Fade-in animation on load
 document.addEventListener('DOMContentLoaded', () => {
