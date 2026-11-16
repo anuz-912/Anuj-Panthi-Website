@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thermalism: Mathematical & Physical Foundations</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#080B11',
+                            card: '#0F172A',
+                            accent: '#F97316', // Thermal Orange
+                            amber: '#F59E0B',  // Amber
+                            crimson: '#EF4444', // Crimson
+                            border: '#1E293B',
+                            subtle: '#334155'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'Monaco', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080B11;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-300 font-sans antialiased selection:bg-orange-500 selection:text-black">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/90 border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-orange-500 to-rose-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-orange-500/20">
+                        <i class="fa-solid fa-fire-flame-curved text-base"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold text-white tracking-wide">Thermal<span class="text-orange-400">ism</span></span>
+                        <span class="hidden md:inline-block ml-2 px-2 py-0.5 text-xs bg-slate-800 text-slate-400 border border-slate-700 rounded-full">Theory & Docs</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex space-x-8 text-sm font-medium">
+                    <a href="#physics" class="hover:text-orange-400 transition-colors">1. Thermodynamics</a>
+                    <a href="#numerical" class="hover:text-orange-400 transition-colors">2. Numerical Schemes</a>
+                    <a href="#materials" class="hover:text-orange-400 transition-colors">3. Material & Timescales</a>
+                    <a href="#pipeline" class="hover:text-orange-400 transition-colors">4. Pipeline & Output</a>
+                </nav>
+
+                <!-- GitHub Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://github.com/anuz-912/thermalism" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-all hover:border-orange-500/50">
+                        <i class="fa-brands fa-github text-base"></i>
+                        <span>Repository</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sub-Navigation for Mobile -->
+    <div class="lg:hidden bg-slate-900/90 border-b border-brand-border px-4 py-2 overflow-x-auto flex space-x-4 text-xs font-medium whitespace-nowrap">
+        <a href="#physics" class="text-slate-300 hover:text-orange-400">Thermodynamics</a>
+        <a href="#numerical" class="text-slate-300 hover:text-orange-400">Numerical Schemes</a>
+        <a href="#materials" class="text-slate-300 hover:text-orange-400">Materials</a>
+        <a href="#pipeline" class="text-slate-300 hover:text-orange-400">Pipeline & Output</a>
+    </div>
+
+    <!-- Hero Banner -->
+    <div class="relative overflow-hidden border-b border-brand-border bg-gradient-to-b from-slate-900/40 to-brand-dark py-16 sm:py-24">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:3rem_3rem]"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="px-3.5 py-1 text-xs font-mono font-semibold uppercase tracking-wider text-orange-400 bg-orange-950/60 border border-orange-800/60 rounded-full inline-block mb-4">
+                Academic Technical Documentation
+            </span>
+            <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight mb-6">
+                Mathematical & Physical Foundations of <span class="bg-gradient-to-r from-amber-300 via-orange-400 to-rose-500 bg-clip-text text-transparent">2D Heat Conduction</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-8">
+                A comprehensive guide covering Fourier's law of thermal conduction, the parabolic heat diffusion PDE, explicit FTCS stability criteria, and dual-solver verification against steady-state SOR relaxation.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-mono text-slate-400">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-code text-orange-400"></i> C++17 & Python Engine</span>
+                <span class="hidden sm:inline">•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-amber-400"></i> Explicit FTCS Transient Solver</span>
+                <span class="hidden sm:inline">•</span>
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced text-rose-400"></i> SOR Steady-State Benchmark</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+
+        <!-- SECTION 1: THERMODYNAMICS & HEAT EQUATION -->
+        <section id="physics" class="scroll-mt-24">
+            <div class="flex items-center gap-3 border-b border-brand-border pb-4 mb-8">
+                <div class="p-2.5 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                    <i class="fa-solid fa-temperature-high text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">1. Physics Foundations</h2>
+                    <p class="text-slate-400 text-sm">Fourier's law, conservation of thermal energy, and the 2D Heat Equation</p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Fourier's Law -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 font-mono">1.1</span> Fourier's Law of Heat Conduction
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        Fourier's law states that the local conductive heat flux density $\mathbf{q}$ ($\text{W/m}^2$) in an isotropic medium is directly proportional to the negative local temperature gradient $\nabla T$:
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-center border border-slate-800/80 mb-4 overflow-x-auto">
+                        $$\mathbf{q} = -k \nabla T = -k \left( \frac{\partial T}{\partial x}\hat{\mathbf{i}} + \frac{\partial T}{\partial y}\hat{\mathbf{j}} \right)$$
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Here, $k$ ($\text{W/m}\cdot\text{K}$) denotes the material's <strong>thermal conductivity</strong>. The negative sign ensures thermal energy flows spontaneously from regions of higher temperature toward regions of lower temperature in accordance with the Second Law of Thermodynamics.
+                    </p>
+                </div>
+
+                <!-- Derivation of 2D Heat Equation -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                        <span class="text-orange-400 font-mono">1.2</span> Conservation of Energy & The 2D Heat PDE
+                    </h3>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        For an infinitesimal control volume with mass density $\rho_m$ ($\text{kg/m}^3$) and specific heat capacity $c_p$ ($\text{J/kg}\cdot\text{K}$) without internal heat generation, the rate of internal thermal energy change equals the net conductive heat flux entering the volume:
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-center border border-slate-800/80 mb-4 overflow-x-auto">
+                        $$\rho_m c_p \frac{\partial T}{\partial t} = -\nabla \cdot \mathbf{q} = -\nabla \cdot (-k \nabla T) = k \nabla^2 T$$
+                    </div>
+                    <p class="text-slate-300 leading-relaxed mb-4">
+                        Dividing by volumetric heat capacity $\rho_m c_p$ defines the <strong>thermal diffusivity</strong> $\alpha = \frac{k}{\rho_m c_p}$ ($\text{m}^2/\text{s}$), yielding the 2D transient parabolic heat equation:
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-center border border-orange-900/60 text-orange-300 mb-4 overflow-x-auto">
+                        $$\frac{\partial T}{\partial t} = \alpha \nabla^2 T = \alpha \left( \frac{\partial^2 T}{\partial x^2} + \frac{\partial^2 T}{\partial y^2} \right)$$
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        <strong>Steady-State Limit:</strong> As $t \to \infty$, thermal equilibrium is reached ($\frac{\partial T}{\partial t} = 0$). The parabolic PDE collapses into <strong>Laplace's Elliptic Equation</strong> ($\nabla^2 T = 0$), which becomes strictly independent of material properties $\alpha$.
+                    </p>
+                </div>
+
+                <!-- Boundary Conditions & Inferno Colormap -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-brand-card p-6 rounded-2xl border border-brand-border">
+                        <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-border-all text-orange-400"></i> Dirichlet Boundary Conditions
+                        </h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-3">
+                            The $L \times L$ ($0.1\text{ m} \times 0.1\text{ m}$) plate is initialized at uniform temperature $T(x,y,0) = T_0$, while the four edges are clamped to fixed isothermal reservoirs:
+                        </p>
+                        <ul class="space-y-2 text-xs font-mono bg-slate-950 p-3.5 rounded-xl border border-slate-800">
+                            <li><span class="text-slate-500">Top ($y = L$):</span> <span class="text-orange-400">$T_{N-1, j} = T_{\text{top}}$</span></li>
+                            <li><span class="text-slate-500">Bottom ($y = 0$):</span> <span class="text-amber-400">$T_{0, j} = T_{\text{bottom}}$</span></li>
+                            <li><span class="text-slate-500">Left ($x = 0$):</span> <span class="text-rose-400">$T_{i, 0} = T_{\text{left}}$</span></li>
+                            <li><span class="text-slate-500">Right ($x = L$):</span> <span class="text-cyan-400">$T_{i, N-1} = T_{\text{right}}$</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-brand-card p-6 rounded-2xl border border-brand-border">
+                        <h3 class="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-palette text-amber-400"></i> Perceptually Uniform Heat Maps
+                        </h3>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-3">
+                            The Python visualizer maps the discrete $100 \times 100$ scalar temperature matrix $T_{i,j}$ using Matplotlib's perceptually uniform <strong>Inferno</strong> colormap:
+                        </p>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-amber-200 inline-block"></span> Peak High Temperature $\rightarrow$ Bright Yellow / White</div>
+                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-orange-600 inline-block"></span> Intermediate Thermal Gradient $\rightarrow$ Fiery Orange / Crimson</div>
+                            <div class="flex items-center gap-2"><span class="w-3.5 h-3.5 rounded bg-indigo-950 border border-indigo-700 inline-block"></span> Cold Sink / Ambient Low $\rightarrow$ Deep Violet / Black</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: NUMERICAL METHODS -->
+        <section id="numerical" class="scroll-mt-24">
+            <div class="flex items-center gap-3 border-b border-brand-border pb-4 mb-8">
+                <div class="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                    <i class="fa-solid fa-calculator text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">2. Numerical Schemes & Stability</h2>
+                    <p class="text-slate-400 text-sm">FTCS explicit time-stepping, Courant-Friedrichs-Lewy (CFL) stability, and SOR verification</p>
+                </div>
+            </div>
+
+            <div class="space-y-10">
+
+                <!-- 2.1 FTCS Discretization -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="text-amber-400 font-mono">2.1</span> Forward-Time Central-Space (FTCS) Discretization
+                    </h3>
+                    
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Discretizing time with step $\Delta t$ ($t^n = n\Delta t$) using a first-order forward difference $\mathcal{O}(\Delta t)$, and space with uniform grid spacing $h = \Delta x = \Delta y = \frac{L}{N-1}$ using second-order central differences $\mathcal{O}(h^2)$:
+                    </p>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono overflow-x-auto mb-4">
+                        $$\frac{T_{i,j}^{n+1} - T_{i,j}^{n}}{\Delta t} = \alpha \left( \frac{T_{i+1,j}^{n} - 2T_{i,j}^{n} + T_{i-1,j}^{n}}{h^2} + \frac{T_{i,j+1}^{n} - 2T_{i,j}^{n} + T_{i,j-1}^{n}}{h^2} \right)$$
+                    </div>
+
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        Defining the dimensionless <strong>mesh Fourier number</strong> $r = \frac{\alpha \Delta t}{h^2}$, we isolate the next timestep temperature $T_{i,j}^{n+1}$:
+                    </p>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-orange-800/70 text-orange-300 font-bold text-sm font-mono overflow-x-auto">
+                        $$T_{i,j}^{n+1} = T_{i,j}^{n} + r \left( T_{i-1,j}^{n} + T_{i+1,j}^{n} + T_{i,j-1}^{n} + T_{i,j+1}^{n} - 4T_{i,j}^{n} \right)$$
+                    </div>
+                </div>
+
+                <!-- 2.2 Von Neumann Stability Criterion -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="text-amber-400 font-mono">2.2</span> Von Neumann Stability & Critical Timestep
+                    </h3>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                        <div class="lg:col-span-2 space-y-4">
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Explicit time-marching schemes are conditionally stable. Rewriting the FTCS update at the center node gives a coefficient of $(1 - 4r)$ on $T_{i,j}^n$. To prevent non-physical checkerboard oscillations and exponential error amplification, the coefficient must remain non-negative:
+                            </p>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono overflow-x-auto">
+                                $$1 - 4r \ge 0 \quad \implies \quad r = \frac{\alpha \Delta t}{h^2} \le \frac{1}{4} \quad \implies \quad \Delta t_{\max} = \frac{h^2}{4\alpha}$$
+                            </div>
+                            <p class="text-slate-300 text-sm leading-relaxed">
+                                Thermalism enforces a $10\%$ safety margin ($\Delta t = 0.9 \, \Delta t_{\max}$, yielding $r = 0.225$), guaranteeing monotonic stability across all materials while maximizing step size.
+                            </p>
+                        </div>
+
+                        <!-- Stencil Weight Box -->
+                        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col items-center justify-center">
+                            <div class="text-xs font-mono text-slate-400 mb-4 tracking-wider uppercase font-semibold">FTCS Update Weights</div>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-mono w-full max-w-[240px]">
+                                <div></div>
+                                <div class="bg-slate-900 border border-amber-500/70 p-2.5 rounded-lg text-amber-300">
+                                    <span class="block text-[10px] text-slate-500">NORTH</span>$+r$
+                                </div>
+                                <div></div>
+
+                                <div class="bg-slate-900 border border-amber-500/70 p-2.5 rounded-lg text-amber-300">
+                                    <span class="block text-[10px] text-slate-500">WEST</span>$+r$
+                                </div>
+                                <div class="bg-orange-600 border border-orange-300 p-2.5 rounded-lg text-white font-bold shadow-lg shadow-orange-500/20">
+                                    <span class="block text-[10px] text-orange-100">SELF</span>$1 - 4r$
+                                </div>
+                                <div class="bg-slate-900 border border-amber-500/70 p-2.5 rounded-lg text-amber-300">
+                                    <span class="block text-[10px] text-slate-500">EAST</span>$+r$
+                                </div>
+
+                                <div></div>
+                                <div class="bg-slate-900 border border-amber-500/70 p-2.5 rounded-lg text-amber-300">
+                                    <span class="block text-[10px] text-slate-500">SOUTH</span>$+r$
+                                </div>
+                                <div></div>
+                            </div>
+                            <div class="mt-4 text-[11px] text-slate-400 text-center font-mono">
+                                At $r = 0.225$: Center weight $= 0.10$
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2.3 Dual-Solver Verification -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <span class="text-amber-400 font-mono">2.3</span> Dual-Solver Cross-Verification (FTCS vs. SOR)
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-white">1. Transient FTCS Time-Marching</h4>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 bg-orange-950 text-orange-400 rounded">Time-Accurate</span>
+                                </div>
+                                <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                    Advances physical time $t$ step-by-step until the maximum instantaneous heating/cooling rate across the entire plate drops below tolerance $\epsilon = 10^{-5}\text{ K/s}$:
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded-lg text-xs font-mono overflow-x-auto border border-slate-800/80 mb-4">
+                                    $$\max_{i,j} \left| \frac{T_{i,j}^{n+1} - T_{i,j}^{n}}{\Delta t} \right| < 10^{-5}$$
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-mono">Captures physical snapshots $T(x,y,t_k)$</div>
+                        </div>
+
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-white">2. Steady-State SOR Solver</h4>
+                                    <span class="text-[10px] font-mono px-2 py-0.5 bg-rose-950 text-rose-400 rounded">$\omega = 1.85$</span>
+                                </div>
+                                <p class="text-slate-400 text-xs leading-relaxed mb-4">
+                                    Independently solves Laplace's equation ($\nabla^2 S = 0$) using Successive Over-Relaxation to verify that the asymptotic transient state $T(t_{\text{final}})$ matches exact equilibrium $S$:
+                                </p>
+                                <div class="bg-slate-900 p-3 rounded-lg text-xs font-mono overflow-x-auto border border-slate-800/80 mb-4">
+                                    $$S_{i,j}^{(k+1)} = (1-\omega)S_{i,j}^{(k)} + \frac{\omega}{4}\left(S_{i-1,j}^{(k+1)} + S_{i+1,j}^{(k)} + S_{i,j-1}^{(k+1)} + S_{i,j+1}^{(k)}\right)$$
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-slate-500 font-mono">Computes residual error map $E_{i,j} = T_{i,j} - S_{i,j}$</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: MATERIAL PROPERTIES & CHARACTERISTIC TIMESCALE -->
+        <section id="materials" class="scroll-mt-24">
+            <div class="flex items-center gap-3 border-b border-brand-border pb-4 mb-8">
+                <div class="p-2.5 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                    <i class="fa-solid fa-layer-group text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">3. Material Properties & Characteristic Timescale</h2>
+                    <p class="text-slate-400 text-sm">Built-in thermophysical constants and Fourier mode snapshot scheduling</p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Characteristic Time Tau -->
+                <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border">
+                    <h3 class="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                        <span class="text-rose-400 font-mono">3.1</span> Characteristic Thermal Diffusion Time ($\tau$)
+                    </h3>
+                    <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        By separation of variables on a square plate of side $L = 0.1\text{ m}$, the fundamental $(1,1)$ spatial Fourier eigenmode decays exponentially as $e^{-t/\tau}$. Thermalism uses $\tau$ to dynamically schedule non-uniform snapshot timestamps regardless of whether the plate is fast-conducting Copper or slow-conducting Stainless Steel:
+                    </p>
+                    <div class="bg-slate-950 p-4 rounded-xl text-center border border-slate-800/80 mb-4 overflow-x-auto">
+                        $$\tau = \frac{L^2}{2\pi^2 \alpha}, \qquad t_{\text{snaps}} \in \{ 0,\; 0.1\tau,\; 0.5\tau,\; 1.0\tau,\; 2.0\tau,\; 4.0\tau,\; t_{\text{final}} \}$$
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Because $\tau \propto \alpha^{-1}$, snapshots cluster densely during early boundary-layer penetration ($0.1\tau, 0.5\tau$) and space out exponentially as the plate approaches asymptotic equilibrium ($4.0\tau \rightarrow t_{\text{final}}$).
+                    </p>
+                </div>
+
+                <!-- Material Table -->
+                <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden">
+                    <div class="p-6 border-b border-brand-border">
+                        <h3 class="text-lg font-bold text-white">3.2 Built-in Engineering Materials ($L = 0.1\text{ m}, \; 100 \times 100$ Grid)</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse font-mono text-xs">
+                            <thead>
+                                <tr class="bg-slate-950 text-slate-400 border-b border-brand-border">
+                                    <th class="py-3.5 px-4">Material</th>
+                                    <th class="py-3.5 px-4">$k$ ($\text{W/m}\cdot\text{K}$)</th>
+                                    <th class="py-3.5 px-4">$\rho_m$ ($\text{kg/m}^3$)</th>
+                                    <th class="py-3.5 px-4">$c_p$ ($\text{J/kg}\cdot\text{K}$)</th>
+                                    <th class="py-3.5 px-4 text-orange-400">$\alpha$ ($\text{m}^2/\text{s}$)</th>
+                                    <th class="py-3.5 px-4 text-amber-400">$\tau$ (s)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-brand-border/60 text-slate-300">
+                                <tr class="hover:bg-slate-900/50">
+                                    <td class="py-3 px-4 font-sans font-semibold text-white">Copper</td>
+                                    <td class="py-3 px-4">401.0</td>
+                                    <td class="py-3 px-4">8960</td>
+                                    <td class="py-3 px-4">385</td>
+                                    <td class="py-3 px-4 text-orange-400">$1.162 \times 10^{-4}$</td>
+                                    <td class="py-3 px-4 text-amber-400">4.36 s</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/50">
+                                    <td class="py-3 px-4 font-sans font-semibold text-white">Aluminium</td>
+                                    <td class="py-3 px-4">237.0</td>
+                                    <td class="py-3 px-4">2700</td>
+                                    <td class="py-3 px-4">897</td>
+                                    <td class="py-3 px-4 text-orange-400">$9.786 \times 10^{-5}$</td>
+                                    <td class="py-3 px-4 text-amber-400">5.18 s</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/50">
+                                    <td class="py-3 px-4 font-sans font-semibold text-white">Brass</td>
+                                    <td class="py-3 px-4">109.0</td>
+                                    <td class="py-3 px-4">8500</td>
+                                    <td class="py-3 px-4">380</td>
+                                    <td class="py-3 px-4 text-orange-400">$3.375 \times 10^{-5}$</td>
+                                    <td class="py-3 px-4 text-amber-400">15.01 s</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/50">
+                                    <td class="py-3 px-4 font-sans font-semibold text-white">Iron</td>
+                                    <td class="py-3 px-4">80.0</td>
+                                    <td class="py-3 px-4">7870</td>
+                                    <td class="py-3 px-4">447</td>
+                                    <td class="py-3 px-4 text-orange-400">$2.274 \times 10^{-5}$</td>
+                                    <td class="py-3 px-4 text-amber-400">22.28 s</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/50">
+                                    <td class="py-3 px-4 font-sans font-semibold text-white">Stainless Steel</td>
+                                    <td class="py-3 px-4">16.0</td>
+                                    <td class="py-3 px-4">8000</td>
+                                    <td class="py-3 px-4">500</td>
+                                    <td class="py-3 px-4 text-orange-400">$4.000 \times 10^{-6}$</td>
+                                    <td class="py-3 px-4 text-amber-400">126.65 s</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: COMPUTATIONAL PIPELINE & SAMPLE SNAPSHOTS -->
+        <section id="pipeline" class="scroll-mt-24">
+            <div class="flex items-center gap-3 border-b border-brand-border pb-4 mb-8">
+                <div class="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    <i class="fa-solid fa-diagram-project text-2xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold text-white tracking-tight">4. Computational Pipeline & Sample Output</h2>
+                    <p class="text-slate-400 text-sm">End-to-end execution workflow and multi-timestamp plate evolution</p>
+                </div>
+            </div>
+
+            <div class="bg-brand-card p-6 sm:p-8 rounded-2xl border border-brand-border space-y-10">
+                
+                <!-- Pipeline Steps -->
+                <div class="relative border-l-2 border-slate-800 ml-4 pl-6 sm:pl-8 space-y-7">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-0.5 w-6 h-6 rounded-full bg-orange-500 text-black font-bold text-xs flex items-center justify-center ring-4 ring-brand-dark">1</div>
+                        <h4 class="text-base font-bold text-white">Domain & Dirichlet Boundary Setup</h4>
+                        <p class="text-slate-400 text-sm mt-1">
+                            Initialize $100 \times 100$ mesh nodes to $T_0$ and enforce isothermal boundary temperatures $(T_{\text{top}}, T_{\text{bottom}}, T_{\text{left}}, T_{\text{right}})$ on outer matrix edges.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-0.5 w-6 h-6 rounded-full bg-amber-500 text-black font-bold text-xs flex items-center justify-center ring-4 ring-brand-dark">2</div>
+                        <h4 class="text-base font-bold text-white">FTCS Transient Marching & Snapshot Capture</h4>
+                        <p class="text-slate-400 text-sm mt-1">
+                            Advance time using $\Delta t = 0.9 \frac{h^2}{4\alpha}$, recording full temperature grids at $t = \{0, 0.1\tau, 0.5\tau, 1.0\tau, 2.0\tau, 4.0\tau\}$ until $\max |\partial T/\partial t| < 10^{-5}$.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-0.5 w-6 h-6 rounded-full bg-rose-500 text-white font-bold text-xs flex items-center justify-center ring-4 ring-brand-dark">3</div>
+                        <h4 class="text-base font-bold text-white">SOR Steady-State Cross-Check & CSV Export</h4>
+                        <p class="text-slate-400 text-sm mt-1">
+                            Solve $\nabla^2 S = 0$ via SOR ($\omega = 1.85$), verify maximum discrepancy $\max |T_{\text{final}} - S|$, and write node coordinates plus all time-series snapshots to <code class="text-orange-300 font-mono text-xs">output.csv</code>.
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] sm:-left-[39px] top-0.5 w-6 h-6 rounded-full bg-cyan-500 text-black font-bold text-xs flex items-center justify-center ring-4 ring-brand-dark">4</div>
+                        <h4 class="text-base font-bold text-white">Automated Matplotlib Diagnostic Grid</h4>
+                        <p class="text-slate-400 text-sm mt-1">
+                            Invoke <code class="text-cyan-300 font-mono text-xs">visualizer.py</code> automatically via system call to render the multi-panel heatmap evolution, SOR comparison, residual error map, and vertical centerline temperature profiles.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sample Visualization Showcase (sample.png) -->
+                <div class="pt-4 border-t border-brand-border">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-image text-orange-400"></i> Sample Simulation Output (<code class="text-orange-300 font-mono text-sm">sample.png</code>)
+                            </h3>
+                            <p class="text-slate-400 text-xs mt-0.5">
+                                Multi-panel diagnostic plot showing transient plate evolution across timestamps ($t=0 \rightarrow t_{\text{final}}$), SOR steady-state benchmark, residual difference map, and centerline thermal profiles.
+                            </p>
+                        </div>
+                        <span class="px-2.5 py-1 text-xs font-mono bg-slate-900 border border-slate-700 rounded-md text-slate-300 self-start sm:self-auto">
+                            130 DPI GridSpec Render
+                        </span>
+                    </div>
+
+                    <figure class="bg-slate-950 p-3 sm:p-4 rounded-xl border border-slate-800 shadow-2xl">
+                        <img 
+                            src="sample.png" 
+                            alt="Thermalism 2D heat conduction simulation output showing temperature evolution across timestamps, SOR steady-state comparison, residual error heatmap, and centerline temperature curves" 
+                            class="w-full h-auto rounded-lg border border-slate-800/80"
+                        >
+                        <figcaption class="mt-3 text-xs text-slate-400 flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+                            <span><strong>Figure 1:</strong> Temporal evolution of the $100 \times 100$ plate from initial state ($t = 0\text{ s}$) through intermediate $\tau$-multiples to steady-state convergence.</span>
+                            <span class="font-mono text-orange-400/90">Generated by visualizer.py</span>
+                        </figcaption>
+                    </figure>
+                </div>
+
+                <!-- GitHub Link Banner -->
+                <div class="p-6 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <h4 class="text-white font-bold text-base mb-1">Explore Code Implementation</h4>
+                        <p class="text-slate-400 text-xs">View <code class="text-slate-300">thermalsim.cpp</code>, <code class="text-slate-300">visualizer.py</code>, and sample datasets on GitHub.</p>
+                    </div>
+                    <a href="https://github.com/anuz-912/thermalism" target="_blank" rel="noopener noreferrer" class="bg-orange-500 hover:bg-orange-400 text-black font-bold px-5 py-2.5 rounded-lg text-sm transition-all flex items-center gap-2 whitespace-nowrap shadow-lg shadow-orange-500/20">
+                        <i class="fa-brands fa-github text-lg"></i>
+                        <span>anuz-912/thermalism</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Page Footer -->
+    <footer class="border-t border-brand-border bg-slate-950 py-10 text-center text-xs text-slate-500">
+        <div class="max-w-5xl mx-auto px-4 space-y-3">
+            <div class="flex justify-center items-center gap-2 text-slate-400 font-semibold text-sm">
+                <span>Thermalism Academic Documentation</span>
+            </div>
+            <p>Made by <a href="https://anujpanthi.com.np" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-orange-400 transition-colors">Anuj Panthi</a></p>
+            <p>GitHub Repository: <a href="https://github.com/anuz-912/thermalism" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:underline">github.com/anuz-912/thermalism</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
